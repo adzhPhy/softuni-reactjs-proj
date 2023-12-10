@@ -1,15 +1,17 @@
 import './App.css'
-import supabase from './client.js'
+import {Route, Routes} from "react-router-dom"
 import Login from './components/auth/Login.jsx'
+import Home from './components/Home.jsx'
+import SignUp from './components/auth/SignUp.jsx'
 
 function App() {
-  const {session} = supabase.auth.getSession()
-  console.log(session)
-  if (session!=undefined) {
-    return <div>Hello</div>
-  } else {
-    return <Login/>
-  }
+  return (
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/signup' element={<SignUp/>}/>
+      </Routes>
+    )
 }
 
 export default App
