@@ -7,7 +7,7 @@ import AuthRoute from './components/auth/AuthRoute.jsx'
 
 function App() {
   return (
-    <div className="w-full p-2 bg-whitesmoke border border-slate-100 ">
+    <div className="container border main">
       <Routes>
         <Route element={<AuthRoute/>}>
         </Route>

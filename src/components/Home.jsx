@@ -1,18 +1,18 @@
-import {useAuth} from '../context/AuthProvider'
 import Navbar from './Navbar'
-import Hero from './Hero'
 import Footer from './Footer'
+import Taskbar from './Taskbar';
+import PostList from './PostList';
 
 function Home() {
-  const {user} = useAuth();
+  
   return (
-  <>
+  <div className="main">
     <Navbar/>
-    <div className='w-full shadow'>
-      <Hero/>
+    <div className='container shadow bg-white text-gray-900'>
+        <PostList/>
     </div> 
     <Footer/>  
-  </>
+  </div>
   )}
 
 export default Home
