@@ -7,11 +7,11 @@ function Home() {
   const {user} = useAuth();
   return (
   <>
-    <div className='w-full flex-col justify-center'>
-      <Navbar/>
+    <Navbar/>
+    <div className='w-full shadow'>
       <Hero/>
-      <Footer/>  
     </div> 
+    <Footer/>  
   </>
   )}
 
