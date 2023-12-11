@@ -1,6 +1,6 @@
 import { useState } from "react";
 import supabase from "../../client"
-import { Link, redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 
 function SignUp() {
@@ -20,7 +20,7 @@ function SignUp() {
       if (error) {
         alert(error.error_description || error.message)
       } else {
-        redirect("/");
+        return <Navigate to='/' />
       }
     }
   };

@@ -1,22 +1,20 @@
 import { useState } from "react"
-import { Link, redirect } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import supabase from "../../client";
+import { useAuth } from "../../context/AuthProvider";
 
 function Login() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const navigate = useNavigate();
+  const {login} = useAuth();
   
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: pass,
-    });
+    const { data: {user, session}, error } = await login(email, pass);
       if (error) {
         alert(error.error_description || error.message)
-      } else {
-        redirect("/");
-      }
+      } if (user && session) navigate('/')
     }
   
   return (
