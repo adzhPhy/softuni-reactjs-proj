@@ -11,8 +11,19 @@ const signOut = () => supabase.auth.signOut();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [auth, setAuth] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    
+    setLoading(true);
+    const getUser = async () => {
+      const {data} = await supabase.auth.getSession();
+      const {user: currentUser} = data;
+      setUser(currentUser ?? null);
+      setLoading(false);
+    };
+    getUser();
+
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN") {
         setUser(session.user);
@@ -28,7 +39,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, signOut }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ auth, user, login, signOut }}>{!loading && children}</AuthContext.Provider>
   );
 };
 

@@ -7,11 +7,11 @@ import AuthRoute from './components/auth/AuthRoute.jsx'
 
 function App() {
   return (
-    <div className='flex justify-center'>
+    <div>
       <Routes>
         <Route element={<AuthRoute/>}>
-          <Route path='/' element={<Home/>}/>
         </Route>
+        <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<SignUp/>}/>
       </Routes>
