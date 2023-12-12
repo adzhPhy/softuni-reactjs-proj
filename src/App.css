@@ -17,6 +17,10 @@ ul > li {
   margin-right: 1.5rem;
 }
 
+li {
+  margin: 0.5rem;
+}
+
 img {
   border-radius: 50%;
 }

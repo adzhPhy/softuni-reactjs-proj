@@ -5,9 +5,10 @@ import Home from './components/Home.jsx'
 import SignUp from './components/auth/SignUp.jsx'
 import AuthRoute from './components/auth/AuthRoute.jsx'
 
+
 function App() {
   return (
-    <div className="container border main">
+    <div className="container main">
       <Routes>
         <Route element={<AuthRoute/>}>
         </Route>

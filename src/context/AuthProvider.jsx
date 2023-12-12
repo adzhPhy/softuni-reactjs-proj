@@ -4,9 +4,14 @@ import supabase from "../client";
 const AuthContext = createContext({});
 
 export const useAuth = () => useContext(AuthContext);
-const login = (email, password) => supabase.auth.signInWithPassword({email, password})
-const signOut = () => supabase.auth.signOut();
 
+// login function
+const login = (email, password) => supabase.auth.signInWithPassword({email, password})
+// logout function
+export const handleSignout = async (event) => {
+  event.preventDefault();
+  const { error } = await signOut();
+};
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -39,7 +44,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ auth, user, login, signOut }}>{!loading && children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ auth, user, login }}>{!loading && children}</AuthContext.Provider>
   );
 };
 

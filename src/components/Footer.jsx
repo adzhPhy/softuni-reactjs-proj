@@ -2,7 +2,7 @@
 function Footer() {
   return (
 
-<footer className="bg-white main rounded-md shadow m-4">
+<footer className="bg-white main rounded-md shadow-xs m-4">
     <ul className="flex block-inline mt-3 text-sm font-medium text-gray-500">
             <li>
                 <a href="#" className="hover:underline me-4 md:me-6">About</a>
