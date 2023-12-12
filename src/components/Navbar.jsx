@@ -2,22 +2,24 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 
 const Navbar = () => {
-  const { auth, signOut } = useAuth();
+  const { user, auth, signOut } = useAuth();
+  var username = user.email.split("@")[0];
+  console.log(username)
   const handleSignout = async (event) => {
     event.preventDefault();
     const { error } = await signOut();
   };
   return (
     <ul className="bg-white flex flex-row justify-between items-center">
-      <ul className="flex">
+      <ul className="flex justify-center items-center">
         <li>
-          <Link
+          {auth && <Link
             to="/"
-            className="text-gray-900 hover:underline"
+            
             aria-current="page"
           >
-            Home
-          </Link>
+            <img className="border" width={75} height={75} src="https://robohash.org/`{username}`.png"/>
+          </Link>}
         </li>
         <li>
           <Link
@@ -33,7 +35,7 @@ const Navbar = () => {
         <ul className="flex">
           <li>
             <Link href="#" className="text-sm text-gray-900 hover:underline">
-              Articles
+              My Articles
             </Link>
           </li>
           <li>

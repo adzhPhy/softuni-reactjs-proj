@@ -1,17 +1,21 @@
 import { useState } from "react";
 import supabase from "../../client"
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 function SignUp() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [confpass, setConfpass] = useState('');
-  
+  const [checked, setChecked] = useState(false);
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (pass!=confpass) {
       alert("Password must match!")
+    } else if (!checked) {
+      alert("Please accept Terms and Conditions!")
     } else {
       const { error } = await supabase.auth.signUp({
         email: email,
@@ -20,7 +24,7 @@ function SignUp() {
       if (error) {
         alert(error.error_description || error.message)
       } else {
-        return <Navigate to='/' />
+        return navigate('/')
       }
     }
   };
@@ -46,7 +50,7 @@ function SignUp() {
                   </div>
                   <div className="flex items-start">
                       <div className="flex items-center h-5">
-                        <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300" required=""/>
+                        <input id="terms" aria-describedby="terms" type="checkbox" onClick={()=>setChecked(!checked)} className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300" required=""/>
                       </div>
                       <div className="ml-3 text-sm">
                         <label className="font-light text-gray-500 ">I accept the <a className="font-medium text-primary-600 hover:underline" href="#">Terms and Conditions</a></label>
