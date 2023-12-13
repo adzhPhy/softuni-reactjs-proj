@@ -5,8 +5,7 @@ import { Avatar } from "@material-tailwind/react";
 const Navbar = () => {
   const { user, auth } = useAuth();
   if (user) {
-    var username = user.email.split("@")[0];
-    var imgsrc = `https://robohash.org/${username}.png`;
+    var imgsrc = `https://robohash.org/${user.id}.png`;
   }
   return (
     <div className="rounded-lg p-2 border shadow">

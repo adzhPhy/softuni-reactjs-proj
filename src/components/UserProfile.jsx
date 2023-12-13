@@ -3,14 +3,12 @@ import {
   CardHeader,
   CardBody,
   Typography,
-  Button,
 } from "@material-tailwind/react";
 import { useAuth } from "../context/AuthProvider";
 
 const UserProfile = () => {
   const { user } = useAuth();
-  var username = user.email.split("@")[0];
-  var imgsrc = `https://robohash.org/${username}.png`;
+  var imgsrc = `https://robohash.org/${user.id}.png`;
   return (
     <div className="text-gray-900">
       <Card className="w-96 shadow rounded-lg">
@@ -46,20 +44,6 @@ const UserProfile = () => {
           <Typography variant="h5" color="blue-gray" className="mb-2">
             Email: {user.email}
           </Typography>
-          <Typography>Change Email:</Typography>
-          <input
-            type="email"
-            label="email"
-            placeholder="Type email here..."
-            className="w-full"
-          />
-          <Button
-            type="button"
-            className="text-gray-900 border-2 border-black mt-2 p-1"
-            onClick={handleEmailChange}
-          >
-            Change Email
-          </Button>
         </CardBody>
       </Card>
     </div>

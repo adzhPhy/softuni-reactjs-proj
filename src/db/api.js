@@ -2,11 +2,19 @@ import supabase from "../client"
 // fetching functions
 // fetch posts
 export const fetchPosts = async () => {
-    let {data:posts} = await supabase
+    let {data: posts} = await supabase
     .from('posts')
     .select('*')
     return [...posts];
 }
+
+export const fetchPost = async (postId) => {
+  let {data: posts} = await supabase
+  .from('posts')
+  .select().eq('id', postId)
+  return [...posts];
+}
+
 // fetch comments of a specific post
 export const fetchComments = async (postId) => {
     let {data: comments} = await supabase
@@ -16,8 +24,10 @@ export const fetchComments = async (postId) => {
 }
 
 export const fetchUsers = async (userId) => {
-  let {data: users} = await supabase
+  let { data: profiles } = await supabase
   .from('profiles')
-  .select("*").eq('id', userId)
-  return [...users]
+  .select('*').eq('id', userId)
+  return [...profiles];
 }
+
+export const updatePost = async (postId) => {}
