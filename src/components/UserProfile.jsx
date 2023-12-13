@@ -2,51 +2,66 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { useAuth } from "../context/AuthProvider";
+import { Input } from "postcss";
 
 const UserProfile = () => {
-  import {user} = useAuth();
+  const { user } = useAuth();
+  var username = user.email.split("@")[0];
+  var imgsrc = `https://robohash.org/${username}.png`;
   return (
     <div className="text-gray-900">
-      <Card className="mt-6 w-96">
-        <CardHeader color="blue-gray" className="relative h-56">
-          <img
-            src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
-            alt="card-image"
-          />
-        </CardHeader>
-        <CardBody>
-          <Typography variant="h5" color="blue-gray" className="mb-2">
-            UI/UX Review Check
-          </Typography>
-          <Typography>
-            The place is close to Barceloneta Beach and bus stop just 2 min by
-            walk and near to &quot;Naviglio&quot; where you can enjoy the main
-            night life in Barcelona.
-          </Typography>
-        </CardBody>
-        <CardFooter className="pt-0">
-          <Button>Read More</Button>
-        </CardFooter>
+      <Card className="w-96 shadow rounded-lg">
+        <div className="flex justify-center items-center">
+          <div className="">
+            <CardHeader className="relative h-56">
+              <img
+                src={imgsrc}
+                alt="card-image"
+                className="w-50 h-50 bg-whitesmoke"
+              />
+            </CardHeader>
+          </div>
+          <div>
+            <CardBody className="">
+              <Typography
+                variant="h5"
+                color="blue-gray"
+                className="mb-2 text-center"
+              >
+                Welcome, {user.email}!
+              </Typography>
+              <Typography className="text-center mt-5">
+                Here you can view all the information regarding your profile.
+              </Typography>
+            </CardBody>
+          </div>
+        </div>
       </Card>
 
-      <Card className="mt-6 w-96">
+      <Card className="mt-6 w-96 rounded-lg">
         <CardBody>
           <Typography variant="h5" color="blue-gray" className="mb-2">
-            UI/UX Review Check
+            Email: {user.email}
           </Typography>
-          <Typography>
-            The place is close to Barceloneta Beach and bus stop just 2 min by
-            walk and near to &quot;Naviglio&quot; where you can enjoy the main
-            night life in Barcelona.
-          </Typography>
+          <Typography>Change Email:</Typography>
+          <input
+            type="email"
+            label="email"
+            placeholder="Type email here..."
+            className="w-full"
+          />
+          <Button
+            type="button"
+            className="text-gray-900 border-2 border-black mt-2 p-1"
+            onClick={handleEmailChange}
+          >
+            Change Email
+          </Button>
         </CardBody>
-        <CardFooter className="pt-0">
-          <Button>Read More</Button>
-        </CardFooter>
       </Card>
     </div>
   );

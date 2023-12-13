@@ -15,3 +15,6 @@ export const fetchComments = async (postId) => {
   return [...comments];
 }
 
+export const handleEmailChange = async () => {
+  
+}
