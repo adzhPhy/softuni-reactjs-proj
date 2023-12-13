@@ -30,4 +30,14 @@ export const fetchUsers = async (userId) => {
   return [...profiles];
 }
 
-export const updatePost = async (postId) => {}
+export const updatePost = async (postId, userId) => {}
+
+
+export const likePost = async (postId, userId) => {
+  const { data, error } = await supabase
+  .from('post_likes')
+  .insert([
+    { post_id: postId, user_id: userId },
+  ])
+  .select()
+}

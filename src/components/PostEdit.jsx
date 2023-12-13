@@ -39,9 +39,7 @@ function PostEdit({ title, content }) {
         <DialogBody className="text-gray-900 fixed w-3/4 h-3/4">
           <Input type="text" placeholder={`${title}`} />
           <Input type="text" placeholder={`${content}`} />
-          <Button className="text-gray-900" onClick={handlePostEdit}>
-            Edit Post
-          </Button>
+          <Button className="text-gray-900">Edit Post</Button>
         </DialogBody>
         <DialogFooter>
           <Button

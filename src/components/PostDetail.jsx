@@ -11,21 +11,20 @@ function PostDetail() {
     queryKey: `${param}`,
     queryFn: () => fetchPost(param),
   });
-  const { data: comments } = useQuery({
-    queryKey: "comments",
-    queryFn: () => fetchComments(param),
-  });
+  // const { data: comments } = useQuery({
+  //   queryKey: "comments",
+  //   queryFn: () => fetchComments(param),
+  // });
 
   return (
     <div>
       <Post
-        key={posts[0].id}
         author={posts[0].user_id}
         post_id={posts[0].id}
         title={posts[0].title}
         content={posts[0].content}
       />
-      <Card className="mt-6 w-96">
+      {/* <Card className="mt-6 w-96">
         {comments?.map((comment) => (
           <Comment
             key={comment.id}
@@ -41,7 +40,7 @@ function PostDetail() {
             placeholder="Comment on this post..."
           />
         </CardFooter>
-      </Card>
+      </Card> */}
     </div>
   );
 }
