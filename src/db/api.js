@@ -11,6 +11,13 @@ export const fetchPosts = async () => {
 export const fetchComments = async (postId) => {
     let {data: comments} = await supabase
   .from('comments')
-  .select('*').eq('post', postId)
+  .select('*').eq('post_id', postId)
   return [...comments];
+}
+
+export const fetchUsers = async (userId) => {
+  let {data: users} = await supabase
+  .from('profiles')
+  .select("*").eq('id', userId)
+  return [...users]
 }

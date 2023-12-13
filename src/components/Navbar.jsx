@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth, handleSignout } from "../context/AuthProvider";
+import { Avatar } from "@material-tailwind/react";
 
 const Navbar = () => {
   const { user, auth } = useAuth();
@@ -8,15 +9,15 @@ const Navbar = () => {
     var imgsrc = `https://robohash.org/${username}.png`;
   }
   return (
-    <div className="sticky">
+    <div className="rounded-lg p-2 border shadow">
       <ul className="bg-white shadow flex flex-row justify-between items-center">
         <ul className="flex justify-center items-center">
           {auth && (
             <li>
               {" "}
               <Link to="/myprofile" aria-current="page">
-                <img
-                  className="border"
+                <Avatar
+                  className="border rounded-lg"
                   style={{ backgroundColor: "whitesmoke" }}
                   width={75}
                   height={75}

@@ -4,12 +4,10 @@ import PostList from "./PostList";
 
 function Home() {
   return (
-    <div className="home">
+    <div className="flex flex-col h-screen gap-3 justify-between">
       <Navbar />
-      <div>
-        <div></div>
+      <div className="mb-auto">
         <PostList />
-        <div></div>
       </div>
       <Footer />
     </div>
