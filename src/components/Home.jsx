@@ -6,7 +6,11 @@ function Home() {
   return (
     <>
       <Navbar />
-      <PostList />
+      <div>
+        <div></div>
+        <PostList />
+        <div></div>
+      </div>
       <Footer />
     </>
   );

@@ -24,3 +24,14 @@ li {
 img {
   border-radius: 50%;
 }
+
+.content { 
+  text-align: justify;
+  text-indent: 50px;
+}
+
+.post-div {
+  padding: 1rem;
+  margin: 2rem;
+  border: solid 1px black;
+}
