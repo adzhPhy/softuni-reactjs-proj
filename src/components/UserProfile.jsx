@@ -6,7 +6,6 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { useAuth } from "../context/AuthProvider";
-import { Input } from "postcss";
 
 const UserProfile = () => {
   const { user } = useAuth();

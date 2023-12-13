@@ -14,7 +14,3 @@ export const fetchComments = async (postId) => {
   .select('*').eq('post', postId)
   return [...comments];
 }
-
-export const handleEmailChange = async () => {
-  
-}
