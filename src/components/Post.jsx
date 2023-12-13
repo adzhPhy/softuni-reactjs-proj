@@ -1,4 +1,5 @@
 function Post({ author, title, content }) {
+  
   var imgsrc = `https://robohash.org/${author}.png`;
   return (
     <div className="container main post-div font-body">

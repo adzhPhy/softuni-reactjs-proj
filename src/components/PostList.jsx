@@ -20,7 +20,7 @@ function PostList() {
         {posts.map((post) => (
           <Post
             key={post.id}
-            author={post.user_id}
+            author={post.author_id}
             title={post.title}
             content={post.content}
           />

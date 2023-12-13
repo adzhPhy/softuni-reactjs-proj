@@ -8,13 +8,13 @@ const Navbar = () => {
     var imgsrc = `https://robohash.org/${username}.png`;
   }
   return (
-    <div className="fixed">
+    <div className="sticky">
       <ul className="bg-white shadow flex flex-row justify-between items-center">
         <ul className="flex justify-center items-center">
           {auth && (
             <li>
               {" "}
-              <Link to="/" aria-current="page">
+              <Link to="/myprofile" aria-current="page">
                 <img
                   className="border"
                   style={{ backgroundColor: "whitesmoke" }}

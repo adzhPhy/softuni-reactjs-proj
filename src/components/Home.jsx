@@ -4,7 +4,7 @@ import PostList from "./PostList";
 
 function Home() {
   return (
-    <>
+    <div className="home">
       <Navbar />
       <div>
         <div></div>
@@ -12,7 +12,7 @@ function Home() {
         <div></div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
