@@ -1,8 +1,17 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is made as a result of the SoftUni ReactJS 2023 Course.
 
-Currently, two official plugins are available:
+The project represents a Social media platform revolving around sharing articles.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Main components: Home -> PostList -> Post
+
+The detailed view of each Post (via the PostDetail component) unfortunately at the moment is not
+accesibble due issues with Supabase's fetching problems.
+(as of 13/12/2023 check at https://status.supabase.com/)
+
+Editing and Deleting functionality is authentication and id based, that is only if the authenticated user
+is the author of specific posts/articles - only then he can edit them.
+
+Finally, I would like to add that the main functionality to be implemented is accessing the ArXiv API
+to be able to save and share articles, as well as create groups.
