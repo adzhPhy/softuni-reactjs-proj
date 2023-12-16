@@ -4,27 +4,31 @@ import Post from "./Post";
 import { useQuery } from "react-query";
 import Comment from "./Comment";
 import { Card, CardFooter, Input } from "@material-tailwind/react";
+import { useState } from "react";
 
 function PostDetail() {
+  const [postData, setPostData] = useState(null);
   const { param } = useParams();
   const { data: posts } = useQuery({
-    queryKey: `${param}`,
     queryFn: () => fetchPost(param),
+    queryKey: `${param}`,
   });
-  // const { data: comments } = useQuery({
-  //   queryKey: "comments",
-  //   queryFn: () => fetchComments(param),
-  // });
+  setPostData(posts);
 
+  const { data: comments } = useQuery({
+    queryFn: () => fetchComments(param),
+    queryKey: "comments",
+  });
+  console.log(comments);
   return (
     <div>
       <Post
-        author={posts[0].user_id}
-        post_id={posts[0].id}
-        title={posts[0].title}
-        content={posts[0].content}
+        author={postData.user_id}
+        post_id={postData.id}
+        title={postData.title}
+        content={postData.content}
       />
-      {/* <Card className="mt-6 w-96">
+      <Card className="mt-6 w-96">
         {comments?.map((comment) => (
           <Comment
             key={comment.id}
@@ -40,7 +44,7 @@ function PostDetail() {
             placeholder="Comment on this post..."
           />
         </CardFooter>
-      </Card> */}
+      </Card>
     </div>
   );
 }

@@ -2,8 +2,6 @@ import { useQuery } from "react-query";
 import { fetchPosts } from "../db/api";
 import Post from "./Post";
 
-import { Link } from "react-router-dom";
-
 function PostList() {
   const { data: posts, isLoading } = useQuery({
     queryKey: "posts",

@@ -21,7 +21,7 @@ function PostEdit({ title, content }) {
         <MdModeEdit />
         <Button
           onClick={handleOpen}
-          className="flex flex-row justify-center items-center text-gray-900"
+          className="flex flex-row justify-center p-1 items-center bg-white text-gray-900"
         >
           <Typography variant="h3">Edit post</Typography>
         </Button>
@@ -29,7 +29,7 @@ function PostEdit({ title, content }) {
       <Dialog
         open={open}
         handler={handleOpen}
-        className="text-gray-900"
+        className="text-gray-900 justify-center items-center"
         animate={{
           mount: { scale: 1, y: 0 },
           unmount: { scale: 0.9, y: -100 },
