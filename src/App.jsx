@@ -12,11 +12,11 @@ function App() {
   return (
     <div className="container main">
       <Routes>
-      <Route element={<AuthRoute/>}>
-        <Route path="/myprofile" element={<UserProfile />} />
-        <Route path="/posts/:id" element={<PostDetail />} />
-        <Route path="/my-articles" element={<Articles />} />
-      </Route>
+        <Route element={<AuthRoute />}>
+          <Route path="/myprofile" element={<UserProfile />} />
+          <Route path="/posts/:postId" element={<PostDetail />} />
+          <Route path="/my=articles" element={<Articles />} />
+        </Route>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

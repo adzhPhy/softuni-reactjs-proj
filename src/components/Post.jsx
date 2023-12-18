@@ -10,35 +10,36 @@ import { AiOutlineLike } from "react-icons/ai";
 import { useAuth } from "../context/AuthProvider";
 import PostEdit from "./PostEdit";
 import { Link } from "react-router-dom";
-import { QueryClient, useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { updatePost, likePost, fetchPostLikes } from "../db/api";
 
 function Post({ author, post_id, title, content }) {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  const { data: likes } = useQuery({
+    queryFn: () => fetchPostLikes(post_id),
+    queryKey: ["likes"],
+  });
 
   const { mutateAsync: handlePostUpdate } = useMutation({
     mutationFn: updatePost,
     onSuccess: () => {
-      QueryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
-  });
-
-  const { data: likes } = useQuery({
-    queryFn: () => fetchPostLikes(post_id),
-    queryKey: "likes",
   });
 
   const { mutateAsync: handlePostLike } = useMutation({
     mutationFn: likePost,
     onSuccess: () => {
-      QueryClient.invalidateQueries(["likes"]);
+      queryClient.invalidateQueries({ queryKey: ["likes"] });
     },
   });
 
   return (
     <div className="flex flex-col justify-center items-center m-3.5">
       <Link to={"/posts/" + post_id}>
-        <Card className="m-4 w-96 h-96 border-black rounded-md shadow-md">
+        <Card className="m-4 w-96 h-96 border-black pt-2 rounded-md shadow-md">
           <CardHeader className="flex justify-center w-50 h-50 items-center">
             <Avatar
               style={{
@@ -73,7 +74,10 @@ function Post({ author, post_id, title, content }) {
       {user && user.id !== author && (
         <div className="flex items-center">
           <AiOutlineLike className="text-lg" />
-          <Button className="text-gray-800 bg-white flex p-1" onClick={handlePostLike}>
+          <Button
+            className="text-gray-800 bg-white flex p-1"
+            onClick={handlePostLike}
+          >
             Like Post
           </Button>
         </div>

@@ -1,18 +1,20 @@
 import { Avatar, CardBody, Typography } from "@material-tailwind/react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchUser } from "../db/api";
+import { format } from "date-fns";
 
-function Comment({ _id, content, authorId }) {
+function Comment({ content, authorId, created_at }) {
   const { data: profiles } = useQuery({
-    queryKey: "user",
+    queryKey: ["user"],
     queryFn: () => fetchUser(authorId),
   });
+  console.log(profiles);
   var username =
     profiles === undefined ? "test" : profiles[0].email.split("@")[0];
   var imgsrc = `https://robohash.org/${username}.png`;
   return (
     <>
-      <CardBody className="flex items-center" key={_id}>
+      <CardBody className="flex items-center">
         <Avatar
           style={{
             width: "40px",
@@ -31,6 +33,7 @@ function Comment({ _id, content, authorId }) {
         >
           {content}
         </Typography>
+        <Typography className="text-xs">{format(created_at)}</Typography>
       </CardBody>
     </>
   );

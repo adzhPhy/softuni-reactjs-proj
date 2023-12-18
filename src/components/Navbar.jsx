@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
-import { useAuth, handleSignout } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 import { Avatar } from "@material-tailwind/react";
+import supabase from "../client";
 
 const Navbar = () => {
   const { user, auth } = useAuth();
+
+  const handleSignout = async (event) => {
+    event.preventDefault();
+    const { error } = await supabase.auth.signOut();
+  };
+
   if (user) {
     var imgsrc = `https://robohash.org/${user.id}.png`;
   }
