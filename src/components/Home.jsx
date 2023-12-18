@@ -6,7 +6,7 @@ function Home() {
   return (
     <div className="flex flex-col gap-3 justify-between max-w-screen-lg">
       <Navbar />
-      <div className="flex gap-10 justify-center items-center bg-white text-gray-900">
+      <div className="flex bg-bgimage shadow-md gap-10 justify-center items-center bg-white text-gray-900">
         <PostList />
       </div>
       <Footer />

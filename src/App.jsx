@@ -15,7 +15,7 @@ function App() {
         <Route element={<AuthRoute />}>
           <Route path="/myprofile" element={<UserProfile />} />
           <Route path="/posts/:postId" element={<PostDetail />} />
-          <Route path="/my=articles" element={<Articles />} />
+          <Route path="/my-articles" element={<Articles />} />
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

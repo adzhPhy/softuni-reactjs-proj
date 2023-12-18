@@ -45,7 +45,10 @@ const Navbar = () => {
         {auth && (
           <ul className="flex">
             <li>
-              <Link href="#" className="text-sm text-gray-900 hover:underline">
+              <Link
+                to="/my-articles"
+                className="text-sm text-gray-900 hover:underline"
+              >
                 My Articles
               </Link>
             </li>

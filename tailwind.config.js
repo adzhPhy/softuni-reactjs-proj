@@ -8,6 +8,9 @@ export default {
     extend: {
       fontFamily: {
         body: "Montserrat"
+      },
+      backgroundImage: {
+        'bgimage': "url('/public/physics.jpeg')",
       }
     },
   },

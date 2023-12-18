@@ -37,17 +37,18 @@ function Post({ author, post_id, title, content }) {
   });
 
   return (
-    <div className="flex flex-col justify-center items-center m-3.5">
+    <div className="flex flex-col rounded-md justify-center items-center m-3.5">
       <Link to={"/posts/" + post_id}>
-        <Card className="m-4 w-96 h-96 border-black pt-2 rounded-md shadow-md">
+        <Card className=" m-4 w-96 h-96 border border-gray-600 pt-2 rounded-sm shadow-md">
           <CardHeader className="flex justify-center w-50 h-50 items-center">
             <Avatar
               style={{
                 width: "80px",
                 height: "80px",
                 borderRadius: "100%",
-                border: "1px solid",
+                border: "1.5px solid",
                 backgroundColor: "whitesmoke",
+                marginLeft: "1rem",
               }}
               src={`https://robohash.org/${author}.png`}
               alt="author-image"
@@ -63,7 +64,6 @@ function Post({ author, post_id, title, content }) {
           </CardBody>
         </Card>
         <p className="justify-start gap-2 text-sm flex">
-          {" "}
           <AiOutlineLike className="text-lg ml-4" />
           {`${likes?.length} likes`}
         </p>
