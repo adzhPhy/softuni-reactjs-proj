@@ -9,7 +9,6 @@ import { useAuth } from "../context/AuthProvider";
 function PostDetail() {
   const { user } = useAuth();
   const { postId } = useParams();
-  console.log(postId);
 
   const { data: posts } = useQuery({
     queryFn: () => fetchPost(postId),

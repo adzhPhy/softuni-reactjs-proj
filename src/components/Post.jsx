@@ -16,11 +16,13 @@ import { updatePost, likePost, fetchPostLikes } from "../db/api";
 function Post({ author, post_id, title, content }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-
+  
+  console.log(`${post_id}`);
   const { data: likes } = useQuery({
-    queryFn: () => fetchPostLikes(post_id),
     queryKey: ["likes"],
+    queryFn: () => fetchPostLikes(post_id),
   });
+  console.log(likes);
 
   const { mutateAsync: handlePostUpdate } = useMutation({
     mutationFn: updatePost,
