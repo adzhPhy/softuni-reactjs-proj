@@ -55,6 +55,6 @@ export const likePost = async (postId, userId) => {
   .insert([
     { "post_id": postId, "user_id": userId },
   ])
-  .select()
+  
 }
 

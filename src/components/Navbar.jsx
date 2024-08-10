@@ -4,20 +4,22 @@ import { Avatar } from "@material-tailwind/react";
 import supabase from "../client";
 
 const Navbar = () => {
-  const { user, auth } = useAuth();
+  const { user } = useAuth();
+  const isAuthenticated = user?.role === "authenticated" ? true : false;
+
   const handleSignout = async (event) => {
     event.preventDefault();
     const { error } = await supabase.auth.signOut();
   };
-  console.log(auth);
-  if (auth) {
+
+  if (isAuthenticated) {
     var imgsrc = `https://robohash.org/${user.id}.png`;
   }
   return (
     <div className="rounded-lg p-2 border shadow">
       <ul className="bg-white shadow flex flex-row justify-between items-center">
         <ul className="flex justify-center items-center">
-          {auth && (
+          {isAuthenticated && (
             <li>
               {" "}
               <Link to="/myprofile" aria-current="page">
@@ -41,7 +43,7 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
-        {auth && (
+        {isAuthenticated && (
           <ul className="flex">
             <li>
               <Link
@@ -67,7 +69,7 @@ const Navbar = () => {
             </li>
           </ul>
         )}
-        {!auth && (
+        {!isAuthenticated && (
           <div>
             <li>
               <Link
