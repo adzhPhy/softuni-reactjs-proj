@@ -13,5 +13,4 @@ accesibble due issues with Supabase's fetching problems.
 Editing and Deleting functionality is authentication and id based, that is only if the authenticated user
 is the author of specific posts/articles - only then he can edit them.
 
-Finally, I would like to add that the main functionality to be implemented is accessing the ArXiv API
-to be able to save and share articles, as well as create groups.
+V2: Adding Groups, Article Save functionality.
