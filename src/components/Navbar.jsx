@@ -5,13 +5,12 @@ import supabase from "../client";
 
 const Navbar = () => {
   const { user, auth } = useAuth();
-
   const handleSignout = async (event) => {
     event.preventDefault();
     const { error } = await supabase.auth.signOut();
   };
-
-  if (user) {
+  console.log(auth);
+  if (auth) {
     var imgsrc = `https://robohash.org/${user.id}.png`;
   }
   return (

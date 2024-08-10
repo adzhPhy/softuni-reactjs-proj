@@ -6,13 +6,15 @@ function PostList() {
   const { data: posts, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: () => fetchPosts(),
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading) {
     return <div>Loading posts...</div>;
   }
   return (
-    <div className="flex border bg-slate-50 rounded-md flex-wrap gap-8 m-7 justify-center items-center bg-white text-gray-900">
+    <div className="flex border bg-slate-50 rounded-md flex-wrap gap-8 m-7 justify-center items-center text-gray-900">
       {posts?.map((post) => (
         <Post
           key={post.id}

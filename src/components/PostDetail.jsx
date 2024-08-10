@@ -10,18 +10,15 @@ function PostDetail() {
   const { user } = useAuth();
   const { postId } = useParams();
 
-  const { data: posts } = useQuery({
+  const { data: post } = useQuery({
+    queryKey: [postId],
     queryFn: () => fetchPost(postId),
-    queryKey: [`${postId}`],
   });
-  console.log(posts);
-  var post = posts[0];
 
   const { data: comments } = useQuery({
+    queryKey: ["comments", postId],
     queryFn: () => fetchComments(postId),
-    queryKey: ["comments"],
   });
-  console.log(comments);
 
   return (
     <div className="flex flex-col justify-center items-center">

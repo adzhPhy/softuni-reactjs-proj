@@ -9,10 +9,10 @@ export const fetchPosts = async () => {
 }
 
 export const fetchPost = async (postId) => {
-  let {data: posts} = await supabase
+  let {data: post} = await supabase
   .from('posts')
   .select('*').eq("id", postId).single()
-  return [...posts];
+  return [...post];
 }
 
 // fetch comments of a specific post
@@ -31,11 +31,11 @@ export const fetchUser = async (userId) => {
 }
 
 export const fetchPostLikes = async (postId) => {
-let { data: post_likes, error } = await supabase
+  let { data: likes } = await supabase
   .from('post_likes')
   .select('*')
-  .eq('post_id', `${postId}`)
-  return [...post_likes]
+  .eq('post_id', postId)
+  return [...likes]
 };
 
 // update, insert queries
@@ -43,18 +43,18 @@ let { data: post_likes, error } = await supabase
 export const updatePost = async (postTitle, postContent) => {
   const { error } = await supabase
   .from('posts')
-  .insert([
+  .update([
     { "updated_at": Date.now(), "title": postTitle, "content": postContent  },
   ])
   .select("*").single()
 }
 
 export const likePost = async (postId, userId) => {
-  const { error } = await supabase
+  const { data, error } = await supabase
   .from('post_likes')
   .insert([
     { "post_id": postId, "user_id": userId },
   ])
-  .select("*").single()
+  .select()
 }
 

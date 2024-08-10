@@ -8,33 +8,30 @@ import {
 } from "@material-tailwind/react";
 import { AiOutlineLike } from "react-icons/ai";
 import { useAuth } from "../context/AuthProvider";
-import PostEdit from "./PostEdit";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { updatePost, likePost, fetchPostLikes } from "../db/api";
+import { likePost, fetchPostLikes } from "../db/api";
+import { useState } from "react";
 
 function Post({ author, post_id, title, content }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  
-  console.log(`${post_id}`);
-  const { data: likes } = useQuery({
-    queryKey: ["likes"],
-    queryFn: () => fetchPostLikes(post_id),
-  });
-  console.log(likes);
 
-  const { mutateAsync: handlePostUpdate } = useMutation({
-    mutationFn: updatePost,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    },
+  const { data: likes } = useQuery({
+    queryKey: ["likes", post_id],
+    queryFn: () => fetchPostLikes(post_id),
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   const { mutateAsync: handlePostLike } = useMutation({
-    mutationFn: likePost,
+    mutationFn: () => likePost(post_id, user.id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["likes"] });
+      queryClient.invalidateQueries({
+        queryKey: ["posts", "likes"],
+        refetchType: "active",
+        refetchOnWindowFocus: false,
+      });
     },
   });
 
@@ -70,9 +67,6 @@ function Post({ author, post_id, title, content }) {
           {`${likes?.length} likes`}
         </p>
       </Link>
-      {user && user.id === author && (
-        <PostEdit title={title} content={content} onClick={handlePostUpdate} />
-      )}
       {user && user.id !== author && (
         <div className="flex items-center">
           <AiOutlineLike className="text-lg" />
