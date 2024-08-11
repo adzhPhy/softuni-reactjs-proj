@@ -16,11 +16,11 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <DataProvider>
+      <DataProvider>
+        <AuthProvider>
           <App />
-        </DataProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </DataProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

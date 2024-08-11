@@ -27,6 +27,7 @@ function Post({ author, post_id, title, content }) {
   // --------------------------------------------------
   useEffect(() => {
     if (
+      user &&
       likes
         .filter((like) => {
           return like.post_id === post_id;
