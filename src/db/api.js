@@ -8,28 +8,6 @@ export const fetchPosts = async () => {
     return [...posts];
 }
 
-export const fetchPost = async (postId) => {
-  let {data: post} = await supabase
-  .from('posts')
-  .select('*').eq("id", postId).single()
-  return [...post];
-}
-
-// fetch comments of a specific post
-export const fetchComments = async (postId) => {
-    let {data: comments} = await supabase
-  .from('comments')
-  .select('*').eq("post_id", postId)
-  return [...comments];
-}
-
-export const fetchUser = async (userId) => {
-  let { data: profiles } = await supabase
-  .from('profiles')
-  .select('*').eq("id", userId).single()
-  return [...profiles];
-}
-
 export const fetchPostLikes = async (postId) => {
   let { data: likes } = await supabase
   .from('post_likes')
@@ -37,6 +15,22 @@ export const fetchPostLikes = async (postId) => {
   .eq('post_id', postId)
   return [...likes]
 };
+
+export const fetchComments = async (postId) => {
+    let {data: comments} = await supabase
+  .from('comments')
+  .select('*')
+  .eq('post_id', postId)
+  return [...comments];
+}
+
+export const fetchUsers = async () => {
+  let { data: profiles } = await supabase
+  .from('profiles')
+  .select('*')
+  return [...profiles];
+}
+
 
 // update, insert queries
 
@@ -46,7 +40,7 @@ export const updatePost = async (postTitle, postContent) => {
   .update([
     { "updated_at": Date.now(), "title": postTitle, "content": postContent  },
   ])
-  .select("*").single()
+  .select("*")
 }
 
 export const likePost = async (postId, userId) => {
@@ -55,6 +49,5 @@ export const likePost = async (postId, userId) => {
   .insert([
     { "post_id": postId, "user_id": userId },
   ])
-  
 }
 

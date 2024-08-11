@@ -21,16 +21,16 @@ function Post({ author, post_id, title, content }) {
     queryFn: () => fetchPostLikes(post_id),
     refetchOnWindowFocus: true,
   });
-
+  // --------------------------------------------------
   const { mutate: handlePostLike } = useMutation({
     mutationFn: () => likePost(post_id, user.id),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["likes"],
-        refetchOnMount: true,
       });
     },
   });
+  // -------------------------------------------------
   return (
     <div className="flex flex-col rounded-md justify-center items-center m-3.5">
       <Link to={"/posts/" + post_id}>

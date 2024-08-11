@@ -6,7 +6,6 @@ function PostList() {
   const { data: posts, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: () => fetchPosts(),
-    staleTime: Infinity,
     refetchOnWindowFocus: false,
   });
 
