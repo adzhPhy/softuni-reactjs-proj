@@ -82,3 +82,12 @@ export const insertArticle = async (postId, userId) => {
   if (error) throw (error)
 }
           
+export const insertComment = async (postId, userId, commentContent) => {
+  const {error} = await supabase
+  .from('comments')
+  .insert([
+    {post_id: postId, user_id: userId, content: commentContent}
+  ])
+  .select()
+  if (error) throw (error)
+}
