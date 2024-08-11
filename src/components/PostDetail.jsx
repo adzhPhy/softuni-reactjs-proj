@@ -34,7 +34,6 @@ function PostDetail() {
     toast.success("Comment is posted!");
     setCommentContent("");
   };
-
   // -----------------------------------------
   return (
     <div className="w-full flex flex-row justify-center items-center text-gray-900">
@@ -51,7 +50,7 @@ function PostDetail() {
               <Comment
                 key={comment.id}
                 created_at={comment.created_at}
-                author_id={comment.user_id}
+                authorId={comment.user_id}
                 content={comment.content}
               />
             ))}

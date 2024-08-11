@@ -29,6 +29,7 @@ function Post({ author, post_id, title, content }) {
   const [postLikes, setPostLikes] = useState(0);
   const [postComments, setPostComments] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
+
   // --------------------------------------------------
   useEffect(() => {
     // filter likes and comments by post
@@ -48,7 +49,7 @@ function Post({ author, post_id, title, content }) {
         comments.filter((comment) => comment.post_id === post_id).length
       );
     }
-    // article check
+    // check if article is saved
     if (
       articles != undefined &&
       articles.some((art) => art.post_id === post_id)

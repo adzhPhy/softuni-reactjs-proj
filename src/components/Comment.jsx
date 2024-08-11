@@ -4,7 +4,7 @@ import moment from "moment";
 function Comment({ created_at, authorId, content }) {
   // -----------------------------
   return (
-    <CardBody className="flex items-center flex-col">
+    <CardBody className="flex items-center flex-col border rounded-md m-1 shadow-sm overflow-auto max-h-48">
       <div className="flex items-center">
         <Avatar
           style={{
