@@ -7,6 +7,7 @@ import AuthRoute from "./components/auth/AuthRoute.jsx";
 import PostDetail from "./components/PostDetail.jsx";
 import Articles from "./components/Articles.jsx";
 import UserProfile from "./components/UserProfile.jsx";
+import PostCreate from "./components/PostCreate.jsx";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
             <Route path="/myprofile" element={<UserProfile />} />
             <Route path="/posts/:postId" element={<PostDetail />} />
             <Route path="/my-articles" element={<Articles />} />
-            <Route path="/create-post" element={<Articles />} />
+            <Route path="/create-post" element={<PostCreate />} />
           </Route>
           <Route path="/" exact element={<Home />} />
           <Route path="/login" element={<Login />} />

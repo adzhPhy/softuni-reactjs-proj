@@ -57,11 +57,27 @@ function Post({ author, post_id, title, content }) {
     setPostLiked(true);
   };
   // -------------------------------------------------
+  var button = <></>;
+  if (postLiked) {
+    button = <AiFillLike className="text-lg" />;
+  } else if (user && user.id != author) {
+    button = (
+      <Button
+        className="text-gray-800 bg-white flex p-1"
+        onClick={handlePostLike}
+      >
+        <AiOutlineLike className="text-lg" />
+      </Button>
+    );
+  } else {
+    button = <AiOutlineLike className="text-lg" />;
+  }
+  // -------------------------------------------------
   return (
     <div className="flex flex-col rounded-md justify-center items-center m-3.5">
       <Link to={"/posts/" + post_id}>
         <Card className=" m-4 w-96 h-96 border border-gray-600 pt-2 rounded-sm shadow-md">
-          <CardHeader className="flex justify-center w-50 h-50 items-center">
+          <CardHeader className="flex justify-center w-50 h-50 p-2 items-center">
             <Avatar
               style={{
                 width: "80px",
@@ -84,21 +100,9 @@ function Post({ author, post_id, title, content }) {
             </Typography>
           </CardBody>
         </Card>
-        <div className="flex items-center gap-3 mb-4 pl-4">
+        <div className="flex gap-3 mb-4 pl-4">
           <p className="justify-start gap-2 text-sm flex">
-            {postLiked ? (
-              <AiFillLike className="text-lg" />
-            ) : (
-              user &&
-              user.id != author && (
-                <Button
-                  className="text-gray-800 bg-white flex p-1"
-                  onClick={handlePostLike}
-                >
-                  <AiOutlineLike className="text-lg" />
-                </Button>
-              )
-            )}
+            {button}
             {likes != undefined ? `${postLikes}` : `fetching likes...`}
           </p>
           <p className="justify-start gap-2 text-sm flex">

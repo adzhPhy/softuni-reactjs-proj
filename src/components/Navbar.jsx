@@ -45,8 +45,8 @@ const Navbar = () => {
           <ul className="flex">
             <li>
               <Link to="/create-post">
-                <Button className="text-gray-900 hover:text-gray-600">
-                  <MdPostAdd size={30} />
+                <Button className="text-gray-900 hover:text-gray-600 p-0.5">
+                  <MdPostAdd size={25} />
                 </Button>
               </Link>
             </li>
