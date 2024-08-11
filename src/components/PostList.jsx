@@ -3,7 +3,6 @@ import { useData } from "../context/DataProvider";
 
 function PostList() {
   const { posts, isLoading } = useData();
-
   if (isLoading) {
     return <div>Loading posts...</div>;
   }

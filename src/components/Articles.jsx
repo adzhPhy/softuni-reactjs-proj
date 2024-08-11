@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthProvider";
 import { GiArchiveResearch } from "react-icons/gi";
 import { useQuery } from "@tanstack/react-query";
 import { fetchArticles } from "../db/api";
+import SavedArticle from "./SavedArticle";
 
 function Articles() {
   const [myArticles, setMyArticles] = useState([]);
@@ -19,7 +20,7 @@ function Articles() {
     refetchOnMount: true,
   });
   // filter articles by user
-  const filteredArticles = articles.filter((art) => {
+  const filteredArticles = articles?.filter((art) => {
     return art.user_id === user.id;
   });
   //
@@ -30,13 +31,21 @@ function Articles() {
       })
     );
     if (articles != undefined) {
-      setSavedArticles(filteredArticles);
+      const filtPostIds = filteredArticles.map((art) => {
+        return art.post_id;
+      });
+      const filtFunc = (objId) => {
+        return posts.filter((post) => post.id === objId);
+      };
+      var arr = filtPostIds.map((_id) => filtFunc(_id));
+      setSavedArticles(arr[0]);
     }
-  }, [posts, user.id, articles, filteredArticles]);
+  }, []);
   //
   if (isLoading) {
     return <div>Loading posts...</div>;
   }
+  //
   return (
     <div className="flex flex-col justify-center items-center gap-2">
       <div className=" text-gray-800 bg-white border rounded-lg w-50 p-6 flex gap-2 items-center">
@@ -56,11 +65,11 @@ function Articles() {
           ))}
         </div>
       </Card>
-      {filteredArticles.length != 0 && (
+      {savedArticles?.length != 0 && (
         <Card>
           <div className="flex border bg-slate-50 rounded-md flex-wrap gap-8 m-7 justify-center items-center text-gray-900">
             {savedArticles?.map((post) => (
-              <Post
+              <SavedArticle
                 key={post.id}
                 author={post.user_id}
                 post_id={post.id}

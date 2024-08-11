@@ -1,6 +1,11 @@
 import { createContext, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchComments, fetchPostLikes, fetchPosts } from "../db/api";
+import {
+  fetchArticles,
+  fetchComments,
+  fetchPostLikes,
+  fetchPosts,
+} from "../db/api";
 const DataContext = createContext({});
 
 export const useData = () => useContext(DataContext);
@@ -24,8 +29,16 @@ const DataProvider = ({ children }) => {
     queryFn: () => fetchComments(),
     refetchOnWindowFocus: true,
   });
+  // get articles
+  const { data: articles } = useQuery({
+    queryKey: ["articles"],
+    queryFn: () => fetchArticles(),
+    refetchOnWindowFocus: true,
+  });
   return (
-    <DataContext.Provider value={{ posts, likes, isLoading, comments }}>
+    <DataContext.Provider
+      value={{ posts, likes, isLoading, comments, articles }}
+    >
       {!isLoading && children}
     </DataContext.Provider>
   );
