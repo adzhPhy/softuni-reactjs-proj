@@ -9,6 +9,7 @@ import {
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
+import { MdBookmarkAdd } from "react-icons/md";
 import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -42,7 +43,7 @@ function Post({ author, post_id, title, content }) {
         comments.filter((comment) => comment.post_id === post_id).length
       );
     }
-  });
+  }, [user, likes, comments, post_id]);
   //
   const mutate = useMutation({
     mutationFn: () => likePost(post_id, user.id),
@@ -100,15 +101,25 @@ function Post({ author, post_id, title, content }) {
             </Typography>
           </CardBody>
         </Card>
-        <div className="flex gap-3 mb-4 pl-4">
-          <p className="justify-start gap-2 text-sm flex">
-            {button}
-            {likes != undefined ? `${postLikes}` : `fetching likes...`}
-          </p>
-          <p className="justify-start gap-2 text-sm flex">
-            <FaRegComment className="text-lg ml-4" />
-            {comments != undefined ? `${postComments}` : `fetching comments...`}
-          </p>
+        <div className="flex justify-between items-center gap-3 mb-4 pl-4">
+          <div className="flex">
+            <p className="gap-2 text-sm flex">
+              {button}
+              {likes != undefined ? `${postLikes}` : `fetching likes...`}
+            </p>
+            <p className="gap-2 text-sm flex">
+              <FaRegComment className="text-lg ml-4" />
+              {comments != undefined
+                ? `${postComments}`
+                : `fetching comments...`}
+            </p>
+          </div>
+          {user && user.id != author && (
+            <Button className="flex gap-1 text-sm mr-4 text-gray-900 p-1">
+              <MdBookmarkAdd className="text-xl" />
+              Save Article
+            </Button>
+          )}
         </div>
       </Link>
     </div>

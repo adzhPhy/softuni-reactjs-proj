@@ -33,6 +33,13 @@ export const fetchUsers = async () => {
   return [...profiles];
 }
 
+export const fetchArticles = async () => {
+  let { data: articles, error } = await supabase
+  .from('articles')
+  .select('*')
+  if (error) throw (error)
+  return [...articles];
+}
 
 // update, insert queries
 
@@ -55,12 +62,21 @@ export const likePost = async (postId, userId) => {
   if (error) throw (error)
 }         
 
-
 export const insertPost = async (userId, postTitle, postContent) => {
   const { error } = await supabase
   .from('posts')
   .insert([
     { user_id: userId, title: postTitle, content: postContent, },
+  ])
+  .select()
+  if (error) throw (error)
+}
+
+export const insertArticle = async (postId, userId) => {
+  const { error } = await supabase
+  .from('articles')
+  .insert([
+    { post_id: postId, user_id: userId },
   ])
   .select()
   if (error) throw (error)
