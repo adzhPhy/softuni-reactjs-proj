@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
-import { Avatar } from "@material-tailwind/react";
+import { Avatar, Button } from "@material-tailwind/react";
 import supabase from "../client";
+import { MdPostAdd } from "react-icons/md";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -15,6 +16,7 @@ const Navbar = () => {
   if (isAuthenticated) {
     var imgsrc = `https://robohash.org/${user.id}.png`;
   }
+
   return (
     <div className="rounded-lg p-2 border shadow">
       <ul className="bg-white shadow flex flex-row justify-between items-center">
@@ -22,7 +24,7 @@ const Navbar = () => {
           {isAuthenticated && (
             <li>
               {" "}
-              <Link to="/myprofile" aria-current="page">
+              <Link to="/myprofile">
                 <Avatar
                   className="border rounded-lg"
                   style={{ backgroundColor: "whitesmoke" }}
@@ -34,17 +36,20 @@ const Navbar = () => {
             </li>
           )}
           <li>
-            <Link
-              to="/"
-              className="text-gray-900 hover:underline"
-              aria-current="page"
-            >
+            <Link to="/" className="text-gray-900 hover:underline">
               Home
             </Link>
           </li>
         </ul>
         {isAuthenticated && (
           <ul className="flex">
+            <li>
+              <Link to="/create-post">
+                <Button className="text-gray-900 hover:text-gray-600">
+                  <MdPostAdd size={30} />
+                </Button>
+              </Link>
+            </li>
             <li>
               <Link
                 to="/my-articles"
