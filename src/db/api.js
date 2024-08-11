@@ -8,19 +8,23 @@ export const fetchPosts = async () => {
     return [...posts];
 }
 
-export const fetchPostLikes = async (postId) => {
-  let { data: likes } = await supabase
+export const fetchPostLikes = async () => {
+  let { data: likes, error} = await supabase
   .from('post_likes')
-  .select('*')
-  .eq('post_id', postId)
+  .select("*")
+  if (error) {
+    console.log(error)
+  }
   return [...likes]
 };
 
-export const fetchComments = async (postId) => {
-    let {data: comments} = await supabase
+export const fetchComments = async () => {
+    let {data: comments, error} = await supabase
   .from('comments')
-  .select('*')
-  .eq('post_id', postId)
+  .select("*")
+  if (error) {
+    console.log(error)
+  }
   return [...comments];
 }
 
@@ -49,5 +53,4 @@ export const likePost = async (postId, userId) => {
   .insert([
     { "post_id": postId, "user_id": userId },
   ])
-}
-
+}         

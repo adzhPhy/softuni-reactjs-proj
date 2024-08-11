@@ -7,22 +7,43 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
+import { FaRegComment } from "react-icons/fa";
 import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { likePost, fetchPostLikes } from "../db/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { likePost } from "../db/api";
+import { useData } from "../context/DataProvider";
+import { useEffect, useState } from "react";
 
 function Post({ author, post_id, title, content }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-
-  const { data: likes } = useQuery({
-    queryKey: ["likes", post_id],
-    queryFn: () => fetchPostLikes(post_id),
-    refetchOnWindowFocus: true,
-  });
+  const { likes, comments } = useData();
+  //
+  const [postLiked, setPostLiked] = useState(false);
+  const [postLikes, setPostLikes] = useState(0);
+  const [postComments, setPostComments] = useState(0);
   // --------------------------------------------------
-  const { mutate: handlePostLike } = useMutation({
+  useEffect(() => {
+    if (
+      likes
+        .filter((like) => {
+          return like.post_id === post_id;
+        })
+        .some((el) => el.user_id === user.id)
+    ) {
+      setPostLiked(true);
+    }
+    if (likes != undefined && comments != undefined) {
+      setPostLikes(likes.filter((like) => like.post_id === post_id).length);
+      setPostComments(
+        comments.filter((comment) => comment.post_id === post_id).length
+      );
+    }
+  });
+  //
+  const mutate = useMutation({
     mutationFn: () => likePost(post_id, user.id),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -30,6 +51,10 @@ function Post({ author, post_id, title, content }) {
       });
     },
   });
+  const handlePostLike = () => {
+    mutate.mutate();
+    setPostLiked(true);
+  };
   // -------------------------------------------------
   return (
     <div className="flex flex-col rounded-md justify-center items-center m-3.5">
@@ -58,12 +83,22 @@ function Post({ author, post_id, title, content }) {
             </Typography>
           </CardBody>
         </Card>
-        <p className="justify-start gap-2 text-sm flex">
-          <AiOutlineLike className="text-lg ml-4" />
-          {`${likes?.length} likes`}
-        </p>
+        <div className="flex gap-3 mb-4 pl-4">
+          <p className="justify-start gap-2 text-sm flex">
+            {postLiked ? (
+              <AiFillLike className="text-lg" />
+            ) : (
+              <AiOutlineLike className="text-lg" />
+            )}
+            {likes != undefined ? `${postLikes}` : `fetching likes...`}
+          </p>
+          <p className="justify-start gap-2 text-sm flex">
+            <FaRegComment className="text-lg ml-4" />
+            {comments != undefined ? `${postComments}` : `fetching comments...`}
+          </p>
+        </div>
       </Link>
-      {user && user.id !== author && (
+      {user && user.id !== author && !postLiked && (
         <div className="flex items-center">
           <AiOutlineLike className="text-lg" />
           <Button

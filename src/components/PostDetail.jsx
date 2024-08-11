@@ -1,26 +1,17 @@
-import { useParams } from "react-router-dom";
-import { fetchComments, fetchPosts, fetchUsers } from "../db/api";
 import Post from "./Post";
-import { useQuery } from "@tanstack/react-query";
 import Comment from "./Comment";
+import { useParams } from "react-router-dom";
 import { Button, Card, CardFooter, Input } from "@material-tailwind/react";
 import { useAuth } from "../context/AuthProvider";
+import { useData } from "../context/DataProvider";
 
 function PostDetail() {
   const { user } = useAuth();
   const { postId } = useParams();
+  const { posts, comments } = useData();
 
-  const { data } = useQuery({
-    queryKey: ["posts"],
-    queryFn: () => fetchPosts(),
-    refetchOnWindowFocus: false,
-  });
-  const post = data.filter((el) => el.id === postId);
+  const post = posts.filter((el) => el.id === postId);
   // ---------------------------------------
-  const { data: comments } = useQuery({
-    queryKey: ["comments", postId],
-    queryFn: () => fetchComments(postId),
-  });
   const postComments = comments.filter((comment) => comment.post_id === postId);
   // -----------------------------------------
   return (

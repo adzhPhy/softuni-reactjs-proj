@@ -1,13 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchPosts } from "../db/api";
 import Post from "./Post";
+import { useData } from "../context/DataProvider";
 
 function PostList() {
-  const { data: posts, isLoading } = useQuery({
-    queryKey: ["posts"],
-    queryFn: () => fetchPosts(),
-    refetchOnWindowFocus: false,
-  });
+  const { posts, isLoading } = useData();
 
   if (isLoading) {
     return <div>Loading posts...</div>;

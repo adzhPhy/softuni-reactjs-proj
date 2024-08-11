@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     setLoading(true);
+    // get user
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
       const { user: currentUser } = data;
@@ -18,16 +19,14 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     };
     getUser();
-
+    // check auth state
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN") {
         setUser(session.user);
         setAuth(true);
-        console.log("signed in successfuly");
       } else if (event === "SIGNED_OUT") {
         setUser(null);
         setAuth(false);
-        console.log("signed out successfuly");
       }
     });
 
