@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Card,
   CardBody,
@@ -12,24 +11,26 @@ import { FaRegComment } from "react-icons/fa";
 import { MdBookmarkAdd } from "react-icons/md";
 import { MdBookmarkAdded } from "react-icons/md";
 import { useAuth } from "../context/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { insertArticle, likePost } from "../db/api";
 import { useData } from "../context/DataProvider";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AvatarComp from "./Avatar";
+import { FaEdit } from "react-icons/fa";
 
 function Post({ author, post_id, title, content }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const { likes, comments, articles } = useData();
+  const navigate = useNavigate();
   //
   const [postLiked, setPostLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [postLikes, setPostLikes] = useState(0);
   const [postComments, setPostComments] = useState(0);
-  const [isSaved, setIsSaved] = useState(false);
-
   // --------------------------------------------------
   useEffect(() => {
     // filter likes and comments by post
@@ -43,21 +44,24 @@ function Post({ author, post_id, title, content }) {
     ) {
       setPostLiked(true);
     }
+    // check if article is saved
+    if (
+      user &&
+      articles != undefined &&
+      articles
+        .filter((art) => art.user_id === user.id)
+        .some((art) => art.post_id === post_id)
+    ) {
+      setIsSaved(true);
+    }
     if (likes != undefined && comments != undefined) {
       setPostLikes(likes.filter((like) => like.post_id === post_id).length);
       setPostComments(
         comments.filter((comment) => comment.post_id === post_id).length
       );
     }
-    // check if article is saved
-    if (
-      articles != undefined &&
-      articles.some((art) => art.post_id === post_id)
-    ) {
-      setIsSaved(true);
-    }
   }, [user, likes, comments, post_id, articles]);
-  //
+  // mutation functions
   const like = useMutation({
     mutationFn: () => likePost(post_id, user.id),
     onSuccess: () => {
@@ -116,27 +120,27 @@ function Post({ author, post_id, title, content }) {
       </Button>
     );
   }
+  var editButton = (
+    <Button
+      onClick={() => navigate(`/posts/${post_id}/edit`)}
+      className="flex gap-1 p-2 items-center text-gray-900"
+    >
+      <FaEdit className="text-lg" />
+      Edit Post
+    </Button>
+  );
   // -------------------------------------------------
   return (
     <div className="flex flex-col rounded-md justify-center items-center m-3.5">
       <Link to={"/posts/" + post_id}>
         <Card className=" m-4 w-96 h-96 border border-gray-600 pt-2 rounded-sm shadow-md">
           <CardHeader className="flex justify-center w-50 h-50 p-2 items-center">
-            <Avatar
-              style={{
-                width: "80px",
-                height: "80px",
-                borderRadius: "100%",
-                border: "1.5px solid",
-                backgroundColor: "whitesmoke",
-                marginLeft: "1rem",
-              }}
-              src={`https://robohash.org/${author}.png`}
-              alt="author-image"
-            />
-            <Typography variant="h5" color="blue-gray" className="mb-2 ml-2 ">
-              {title}
-            </Typography>
+            <AvatarComp author={author} />
+            <div className="flex flex-col items-center">
+              <Typography variant="h5" color="blue-gray" className="mb-2 ml-2 ">
+                {title}
+              </Typography>
+            </div>
           </CardHeader>
           <CardBody className="flex flex-wrap text-clip overflow-auto">
             <Typography className="text-justify tracking-tight text-md">
@@ -144,22 +148,20 @@ function Post({ author, post_id, title, content }) {
             </Typography>
           </CardBody>
         </Card>
-        <div className="flex justify-between items-center gap-3 mb-4 pl-4">
-          <div className="flex">
-            <p className="gap-2 text-sm flex">
-              {likeButton}
-              {likes != undefined ? `${postLikes}` : `fetching likes...`}
-            </p>
-            <p className="gap-2 text-sm flex">
-              <FaRegComment className="text-lg ml-4" />
-              {comments != undefined
-                ? `${postComments}`
-                : `fetching comments...`}
-            </p>
-          </div>
-          {user && user.id != author && saveButton}
-        </div>
       </Link>
+      <div className="flex justify-between items-center gap-3 mb-4 pl-4">
+        <div className="flex">
+          <p className="gap-2 text-sm flex">
+            {likeButton}
+            {likes != undefined ? `${postLikes}` : `fetching likes...`}
+          </p>
+          <p className="gap-2 text-sm flex">
+            <FaRegComment className="text-lg ml-4" />
+            {comments != undefined ? `${postComments}` : `fetching comments...`}
+          </p>
+        </div>
+        {user && user.id != author ? saveButton : editButton}
+      </div>
       <ToastContainer />
     </div>
   );

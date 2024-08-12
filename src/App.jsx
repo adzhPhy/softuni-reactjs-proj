@@ -8,6 +8,8 @@ import PostDetail from "./components/PostDetail.jsx";
 import Articles from "./components/Articles.jsx";
 import UserProfile from "./components/UserProfile.jsx";
 import PostCreate from "./components/PostCreate.jsx";
+import PostEdit from "./components/PostEdit.jsx";
+import User from "./components/User.jsx";
 
 function App() {
   return (
@@ -17,8 +19,10 @@ function App() {
           <Route element={<AuthRoute />}>
             <Route path="/myprofile" element={<UserProfile />} />
             <Route path="/posts/:postId" element={<PostDetail />} />
+            <Route path="/posts/:postId/edit" element={<PostEdit />} />
             <Route path="/my-articles" element={<Articles />} />
             <Route path="/create-post" element={<PostCreate />} />
+            {/* <Route path="/:userId" element={<User />} /> */}
           </Route>
           <Route path="/" exact element={<Home />} />
           <Route path="/login" element={<Login />} />

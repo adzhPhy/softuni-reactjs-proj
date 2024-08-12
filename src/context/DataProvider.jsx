@@ -5,6 +5,7 @@ import {
   fetchComments,
   fetchPostLikes,
   fetchPosts,
+  fetchUsers,
 } from "../db/api";
 const DataContext = createContext({});
 
@@ -35,9 +36,22 @@ const DataProvider = ({ children }) => {
     queryFn: () => fetchArticles(),
     refetchOnWindowFocus: true,
   });
+  // get users
+  const { data: users } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => fetchUsers(),
+    refetchOnWindowFocus: true,
+  });
   return (
     <DataContext.Provider
-      value={{ posts, likes, isLoading, comments, articles }}
+      value={{
+        posts,
+        likes,
+        isLoading,
+        comments,
+        articles,
+        users,
+      }}
     >
       {!isLoading && children}
     </DataContext.Provider>

@@ -42,7 +42,7 @@ function PostCreate() {
   };
 
   return (
-    <Card className="w-full max-w-[26rem] shadow-lg rounded-md">
+    <Card className="w-[50rem] shadow-lg rounded-md">
       <CardBody>
         <div className="mb-3 flex items-center justify-between">
           <Typography variant="h5" color="blue-gray" className="font-medium">

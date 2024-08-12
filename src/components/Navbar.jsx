@@ -59,11 +59,6 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-sm text-gray-900 hover:underline">
-                My Groups
-              </Link>
-            </li>
-            <li>
               <Link
                 href="#"
                 onClick={handleSignout}

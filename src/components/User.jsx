@@ -5,11 +5,15 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useAuth } from "../context/AuthProvider";
+import { useParams } from "react-router-dom";
 
-const UserProfile = () => {
-  const { user } = useAuth();
-  var imgsrc = `https://robohash.org/${user.id}.png`;
-
+const User = () => {
+  const { user, users, posts } = useAuth();
+  const { userId } = useParams();
+  var imgsrc = `https://robohash.org/${userId}.png`;
+  //
+  const userPosts = posts.filter((post) => post.user_id === userId);
+  //
   return (
     <div className="text-gray-900">
       <Card className="w-96 shadow rounded-lg">
@@ -51,4 +55,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default User;
