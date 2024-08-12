@@ -16,8 +16,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { insertArticle, likePost } from "../db/api";
 import { useData } from "../context/DataProvider";
 import { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import AvatarComp from "./Avatar";
 import { FaEdit } from "react-icons/fa";
 
@@ -37,7 +35,7 @@ function Post({ author, post_id, title, content }) {
     if (
       user &&
       likes
-        .filter((like) => {
+        ?.filter((like) => {
           return like.post_id === post_id;
         })
         .some((el) => el.user_id === user.id)
@@ -77,7 +75,6 @@ function Post({ author, post_id, title, content }) {
       queryClient.invalidateQueries({
         queryKey: ["articles"],
       });
-      toast.success("Article saved successfully!");
     },
   });
   // -------------------------------------------------
@@ -162,7 +159,6 @@ function Post({ author, post_id, title, content }) {
         </div>
         {user && user.id != author ? saveButton : user && editButton}
       </div>
-      <ToastContainer />
     </div>
   );
 }

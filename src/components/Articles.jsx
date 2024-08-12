@@ -1,4 +1,4 @@
-import { Card } from "@material-tailwind/react";
+import { Button, Card } from "@material-tailwind/react";
 import Post from "./Post";
 import { useData } from "../context/DataProvider";
 import { useEffect, useState } from "react";
@@ -23,7 +23,6 @@ function Articles() {
   const filteredArticles = articles?.filter((art) => {
     return art.user_id === user.id;
   });
-  //
   useEffect(() => {
     setMyArticles(
       posts.filter((post) => {
@@ -34,13 +33,13 @@ function Articles() {
       const filtPostIds = filteredArticles.map((art) => {
         return art.post_id;
       });
-      const filtFunc = (objId) => {
-        return posts.filter((post) => post.id === objId);
+      const postFilterFunc = (objId) => {
+        return posts.filter((post) => post.id === objId)[0];
       };
-      var arr = filtPostIds.map((_id) => filtFunc(_id));
-      setSavedArticles(arr[0]);
+      var arr = filtPostIds.map((_id) => postFilterFunc(_id));
+      setSavedArticles(arr);
     }
-  }, []);
+  }, [articles, posts]);
   //
   if (isLoading) {
     return <div>Loading posts...</div>;
@@ -55,31 +54,34 @@ function Articles() {
       <Card>
         <div className="flex border bg-slate-50 rounded-md flex-wrap gap-8 m-7 justify-center items-center text-gray-900">
           {myArticles?.map((post) => (
-            <Post
-              key={post.id}
-              author={post.user_id}
-              post_id={post.id}
-              title={post.title}
-              content={post.content}
-            />
-          ))}
-        </div>
-      </Card>
-      {savedArticles?.length != 0 && (
-        <Card>
-          <div className="flex border bg-slate-50 rounded-md flex-wrap gap-8 m-7 justify-center items-center text-gray-900">
-            {savedArticles?.map((post) => (
-              <SavedArticle
-                key={post.id}
+            <div key={post.id} className="flex">
+              <Post
                 author={post.user_id}
                 post_id={post.id}
                 title={post.title}
                 content={post.content}
               />
-            ))}
-          </div>
-        </Card>
-      )}
+            </div>
+          ))}
+        </div>
+      </Card>
+      {savedArticles === undefined ||
+        (savedArticles?.length != 0 && (
+          <Card>
+            <div className="flex border bg-slate-50 rounded-md flex-wrap gap-8 m-7 justify-center items-center text-gray-900">
+              {savedArticles?.map((post) => (
+                <div key={post.id}>
+                  <SavedArticle
+                    author={post.user_id}
+                    post_id={post.id}
+                    title={post.title}
+                    content={post.content}
+                  />
+                </div>
+              ))}
+            </div>
+          </Card>
+        ))}
     </div>
   );
 }

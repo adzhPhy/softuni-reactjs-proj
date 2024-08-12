@@ -91,3 +91,11 @@ export const insertComment = async (postId, userId, commentContent) => {
   .select()
   if (error) throw (error)
 }
+
+export const deleteArticle = async (postId, userId) => {
+  const { error } = await supabase
+  .from('articles')
+  .delete()
+  .match({post_id: postId, user_id: userId}) 
+  if (error) throw (error)
+}

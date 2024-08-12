@@ -10,16 +10,19 @@ import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { useAuth } from "../context/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { likePost } from "../db/api";
+import { deleteArticle, likePost } from "../db/api";
 import { useData } from "../context/DataProvider";
 import { useEffect, useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { MdOutlineBookmarkRemove } from "react-icons/md";
 
 function SavedArticle({ author, post_id, title, content }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const { likes, comments } = useData();
+  const navigate = useNavigate();
   //
   const [postLiked, setPostLiked] = useState(false);
   const [postLikes, setPostLikes] = useState(0);
@@ -54,12 +57,25 @@ function SavedArticle({ author, post_id, title, content }) {
     },
   });
   //
+  const deletePost = useMutation({
+    mutationFn: () => deleteArticle(post_id, user.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["articles"] });
+      navigate(0);
+    },
+    onError: (error) => {
+      throw error.message;
+    },
+  });
   // -------------------------------------------------
   const handlePostLike = () => {
     like.mutate();
     setPostLiked(true);
   };
-  // -------------------------------------------------
+  const handleArticleDelete = () => {
+    deletePost.mutate();
+  };
+  // ---------------;----------------------------------
   var likeButton = <></>;
   if (postLiked) {
     likeButton = <AiFillLike className="text-lg" />;
@@ -77,9 +93,9 @@ function SavedArticle({ author, post_id, title, content }) {
   }
   // -------------------------------------------------
   return (
-    <div className="flex flex-col rounded-md justify-center items-center m-3.5">
-      <Link to={"/posts/" + post_id}>
-        <Card className=" m-4 w-96 h-96 border border-gray-600 pt-2 rounded-sm shadow-md">
+    <div className="flex flex-col rounded-md justify-center items-center m-3.5 static">
+      <Card className=" m-4 w-96 h-96 border border-gray-600 pt-2 rounded-sm shadow-md">
+        <Link to={"/posts/" + post_id}>
           <CardHeader className="flex justify-center w-50 h-50 p-2 items-center">
             <Avatar
               style={{
@@ -97,14 +113,16 @@ function SavedArticle({ author, post_id, title, content }) {
               {title}
             </Typography>
           </CardHeader>
-          <CardBody className="flex flex-wrap text-clip overflow-auto">
-            <Typography className="text-justify tracking-tight text-md">
-              {content}
-            </Typography>
-          </CardBody>
-        </Card>
-        <div className="flex justify-between items-center gap-3 mb-4 pl-4">
-          <div className="flex">
+        </Link>
+        <CardBody className="flex flex-wrap text-clip overflow-auto">
+          <Typography className="text-justify tracking-tight text-md">
+            {content}
+          </Typography>
+        </CardBody>
+      </Card>
+      <div className="w-full flex flex-row items-center justify-between">
+        <div className="justify-between items-center gap-3 mb-4 pl-4">
+          <div className="flex flex-row gap-2 items-center">
             <p className="gap-2 text-sm flex">
               {likeButton}
               {likes != undefined ? `${postLikes}` : `fetching likes...`}
@@ -117,7 +135,13 @@ function SavedArticle({ author, post_id, title, content }) {
             </p>
           </div>
         </div>
-      </Link>
+        <Button
+          onClick={handleArticleDelete}
+          className="text-gray-900 text-2xl rounded-md p-1 mr-4  bg-slate-300"
+        >
+          <MdOutlineBookmarkRemove />
+        </Button>
+      </div>
     </div>
   );
 }
