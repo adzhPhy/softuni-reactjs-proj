@@ -7,11 +7,10 @@ import {
   Typography,
   Textarea,
   Dialog,
-  DialogHeader,
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updatePost } from "../db/api";
 import { useData } from "../context/DataProvider";
@@ -76,7 +75,7 @@ function PostEdit() {
           </Typography>
         </CardBody>
       </Card>
-      <Card className="flex w-[40rem] h-128 justify-between items-center pl-4">
+      <Card className="flex w-[40rem] h-112 justify-between items-center pl-4 rounded-sm">
         <CardFooter className="w-full pt gap-1 flex flex-col text-gray-900">
           <div className="relative w-full min-w-[200px]">
             <Textarea
@@ -89,12 +88,12 @@ function PostEdit() {
               Edit Title
             </label>
           </div>
-          <div className="relative w-full min-w-[200px] h-64">
+          <div className="relative w-full min-w-[200px] h-128">
             <Textarea
               variant="outlined"
               placeholder={postData.content}
               onChange={(e) => setContent(e.target.value)}
-              className="h-52"
+              className="h-72"
             />
             <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
               Edit Content
@@ -111,12 +110,13 @@ function PostEdit() {
             size={"xs"}
             open={open}
             handler={handleOpen}
-            className="text-gray-900 flex border m-0 bg-slate-50"
+            variant="gradient"
+            className="max-w-[30rem] text-gray-900 flex flex-col border-2 mt-2 w-124 bg-slate-100 gap-1"
           >
-            <DialogBody>
-              Are you sure you want to commit the changes to your post?
+            <DialogBody className="flex justify-center text-md">
+              <b>Are you sure you want to commit the changes to your post?</b>
             </DialogBody>
-            <DialogFooter>
+            <DialogFooter className="justify-center mb-1">
               <Button
                 variant="gradient"
                 onClick={handleOpen}

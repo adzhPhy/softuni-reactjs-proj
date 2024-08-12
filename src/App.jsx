@@ -22,7 +22,7 @@ function App() {
             <Route path="/posts/:postId/edit" element={<PostEdit />} />
             <Route path="/my-articles" element={<Articles />} />
             <Route path="/create-post" element={<PostCreate />} />
-            {/* <Route path="/:userId" element={<User />} /> */}
+            <Route path="/:userId/details" element={<User />} />
           </Route>
           <Route path="/" exact element={<Home />} />
           <Route path="/login" element={<Login />} />

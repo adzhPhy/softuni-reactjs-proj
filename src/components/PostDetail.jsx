@@ -1,7 +1,7 @@
 import Post from "./Post";
 import Comment from "./Comment";
-import { useParams } from "react-router-dom";
-import { Button, Card, CardFooter } from "@material-tailwind/react";
+import { Link, useParams } from "react-router-dom";
+import { Button, Card, CardFooter, Typography } from "@material-tailwind/react";
 import { useAuth } from "../context/AuthProvider";
 import { useData } from "../context/DataProvider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -9,15 +9,19 @@ import { insertComment } from "../db/api";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
 
 function PostDetail() {
   const { user } = useAuth();
   const { postId } = useParams();
-  const { posts, comments } = useData();
+  const { posts, comments, users } = useData();
   const [commentContent, setCommentContent] = useState("");
   const queryClient = useQueryClient();
 
   const post = posts.filter((el) => el.id === postId)[0];
+  const postAuthor = users
+    .filter((us) => us.id === post.user_id)[0]
+    .email.split("@")[0];
   // ---------------------------------------
   const postComments = comments.filter((comment) => comment.post_id === postId);
   // -----------------------------------------
@@ -34,35 +38,56 @@ function PostDetail() {
     toast.success("Comment is posted!");
     setCommentContent("");
   };
+  //
+  var profileLink = "";
+  if (post.user_id === user.id) {
+    profileLink = "/myprofile";
+  } else {
+    profileLink = `/${post.user_id}/details`;
+  }
   // -----------------------------------------
   return (
     <div className="w-full flex flex-row justify-center items-center text-gray-900">
-      <Post
-        author={post.user_id}
-        post_id={post.id}
-        title={post.title}
-        content={post.content}
-      />
-      <div>
+      <div className="flex flex-col justify-start">
+        <Typography variant="h4" className="text-xs absolute ml-8 mt-2">
+          Posted by{" "}
+          <Link
+            to={profileLink}
+            className="underline hover:no-underline hover:text-red-700"
+          >
+            {postAuthor}
+          </Link>{" "}
+          {moment(post.created_at).fromNow()}
+        </Typography>
+        <Post
+          author={post.user_id}
+          post_id={post.id}
+          title={post.title}
+          content={post.content}
+        />
+      </div>
+      <div className="flex flex-col items-center">
         {postComments != undefined ? (
-          <Card className="w-96 rounded">
-            {postComments?.map((comment) => (
-              <Comment
-                key={comment.id}
-                created_at={comment.created_at}
-                authorId={comment.user_id}
-                content={comment.content}
-              />
-            ))}
-          </Card>
+          <div className="flex flex-row gap-1 overflow-y-auto">
+            <Card className="w-96 rounded">
+              {postComments?.map((comment) => (
+                <Comment
+                  key={comment.id}
+                  created_at={comment.created_at}
+                  authorId={comment.user_id}
+                  content={comment.content}
+                />
+              ))}
+            </Card>
+          </div>
         ) : (
           <div>There are no comments for this post yet!</div>
         )}
         {user.id !== post.user_id && (
-          <CardFooter className="w-full pt flex flex-col">
+          <CardFooter className="w-[27rem] pt flex flex-col">
             <div className="relative w-full min-w-[200px]">
               <textarea
-                className="peer h-full min-h-[10px] min-w-[30px] w-full resize-none rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 pt-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
+                className="peer h-full min-h-[10px] w-full resize-none rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 pt-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
                 onChange={(e) => {
                   setCommentContent(e.target.value);
                 }}

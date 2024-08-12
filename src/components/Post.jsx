@@ -160,7 +160,7 @@ function Post({ author, post_id, title, content }) {
             {comments != undefined ? `${postComments}` : `fetching comments...`}
           </p>
         </div>
-        {user && user.id != author ? saveButton : editButton}
+        {user && user.id != author ? saveButton : user && editButton}
       </div>
       <ToastContainer />
     </div>
