@@ -43,7 +43,7 @@ const DataProvider = ({ children }) => {
     queryFn: () => fetchUsers(),
     refetchOnMount: true,
   });
-  //
+  // get history of posts
   const { data: oldposts } = useQuery({
     queryKey: ["oldposts"],
     queryFn: () => fetchOldPosts(),

@@ -39,7 +39,14 @@ function PostEdit() {
   const handleOpen = () => setOpen(!open);
   // edit function
   const updatePostFunc = useMutation({
-    mutationFn: () => updatePost(title, content),
+    mutationFn: () =>
+      supabase
+        .from("posts")
+        .update({
+          title: title,
+          content: content,
+        })
+        .eq("id", postId),
     onSuccess: () => {
       queryClient.invalidateQueries(["posts"]);
       toast.success("Changes have been made!");
