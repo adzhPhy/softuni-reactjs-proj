@@ -1,16 +1,11 @@
-# React + Vite
+# React + Material Tailwind + TanStack Query + Supabase
 
-This project is made as a result of the SoftUni ReactJS 2023 Course.
+This project is made as a result of the SoftUni ReactJS Oct 2023 Course.
 
 The project represents a Social media platform revolving around sharing articles.
 
-Main components: Home -> PostList -> Post
+Main functionality revolves around CRUD with articles. Users can save articles and have access to old (pre-edited) articles via the History of Posts Page. Each user has associated articles which every other (authenticated) user can read. (Auth protected routes are implemented throughout)
 
-The detailed view of each Post (via the PostDetail component) unfortunately at the moment is not
-accesibble due issues with Supabase's fetching problems.
-(as of 13/12/2023 check at https://status.supabase.com/)
+Likes and Comments are implemented.
 
-Editing and Deleting functionality is authentication and id based, that is only if the authenticated user
-is the author of specific posts/articles - only then he can edit them.
-
-V2: Adding Groups, Article Save functionality.
+Each article has a detail view where one can comment.
