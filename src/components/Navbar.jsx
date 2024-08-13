@@ -42,7 +42,10 @@ const Navbar = () => {
           </li>
         </ul>
         {isAuthenticated && (
-          <ul className="flex">
+          <ul className="flex items-center">
+            <li className="text-gray-900 text-sm">
+              Welcome {user.email.split("@")[0]} !
+            </li>
             <li>
               <Link to="/create-post">
                 <Button className="text-gray-900 hover:text-gray-600 p-0.5">
@@ -56,6 +59,14 @@ const Navbar = () => {
                 className="text-sm text-gray-900 hover:underline"
               >
                 My Articles
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/post-history"
+                className="text-sm text-gray-900 hover:underline"
+              >
+                History of Posts
               </Link>
             </li>
             <li>

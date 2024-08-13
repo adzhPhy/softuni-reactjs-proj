@@ -34,9 +34,13 @@ function PostDetail() {
     },
   });
   const handleCommentPost = () => {
-    mutate.mutate();
-    toast.success("Comment is posted!");
-    setCommentContent("");
+    if (commentContent.trim().split(" ").join("") !== "") {
+      mutate.mutate();
+      toast.success("Comment is posted!");
+      setCommentContent("");
+    } else {
+      toast.error("You cannot submit an empty comment!");
+    }
   };
   //
   var profileLink = "";

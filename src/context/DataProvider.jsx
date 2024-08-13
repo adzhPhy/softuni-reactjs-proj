@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   fetchArticles,
   fetchComments,
+  fetchOldPosts,
   fetchPostLikes,
   fetchPosts,
   fetchUsers,
@@ -16,7 +17,7 @@ const DataProvider = ({ children }) => {
   const { data: posts, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: () => fetchPosts(),
-    refetchOnWindowFocus: false,
+    refetchOnMount: true,
   });
   //   get likes
   const { data: likes } = useQuery({
@@ -34,13 +35,19 @@ const DataProvider = ({ children }) => {
   const { data: articles } = useQuery({
     queryKey: ["articles"],
     queryFn: () => fetchArticles(),
-    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
   // get users
   const { data: users } = useQuery({
     queryKey: ["users"],
     queryFn: () => fetchUsers(),
-    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+  });
+  //
+  const { data: oldposts } = useQuery({
+    queryKey: ["oldposts"],
+    queryFn: () => fetchOldPosts(),
+    refetchOnMount: true,
   });
   return (
     <DataContext.Provider
@@ -51,6 +58,7 @@ const DataProvider = ({ children }) => {
         comments,
         articles,
         users,
+        oldposts,
       }}
     >
       {!isLoading && children}

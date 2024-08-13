@@ -41,23 +41,32 @@ export const fetchArticles = async () => {
   return [...articles];
 }
 
-// update, insert queries
-
-export const updatePost = async (postTitle, postContent) => {
-  const { error } = await supabase
-  .from('posts')
-  .update([
-    { "updated_at": Date.now(), "title": postTitle, "content": postContent  },
-  ])
+export const fetchOldPosts = async () => {
+  let {data: oldposts, error} = await supabase
+  .from('history_of_posts')
   .select("*")
   if (error) throw (error)
+  return [...oldposts]
 }
 
+// update, insert, delete queries
+
+export const updatePost = async (postId, postTitle, postContent) => {
+  const { data, error } = await supabase
+  .from("posts")
+  .update({
+    title: postTitle,
+    content: postContent,
+  })
+  .eq("id", postId)
+  if (error) throw (error.message)
+}
+          
 export const likePost = async (postId, userId) => {
   const { error } = await supabase
   .from('post_likes')
   .insert([
-    { "post_id": postId, "user_id": userId },
+    { post_id: postId, user_id: userId },
   ])
   if (error) throw (error)
 }         
@@ -90,6 +99,16 @@ export const insertComment = async (postId, userId, commentContent) => {
   ])
   .select()
   if (error) throw (error)
+}
+
+export const insertOldPost = async (postId, userId, postTitle, postContent) => {
+  const { data, error } = await supabase
+  .from('history_of_posts')
+  .insert([
+    { post_data: {post_id: postId, user_id: userId, post_title: postTitle, post_content: postContent }},
+  ])
+  .select()
+  if (error) throw (error)       
 }
 
 export const deleteArticle = async (postId, userId) => {

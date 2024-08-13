@@ -6,6 +6,7 @@ import SignUp from "./components/auth/SignUp.jsx";
 import AuthRoute from "./components/auth/AuthRoute.jsx";
 import PostDetail from "./components/PostDetail.jsx";
 import Articles from "./components/Articles.jsx";
+import History from "./components/History.jsx";
 import UserProfile from "./components/UserProfile.jsx";
 import PostCreate from "./components/PostCreate.jsx";
 import PostEdit from "./components/PostEdit.jsx";
@@ -21,6 +22,7 @@ function App() {
             <Route path="/posts/:postId" element={<PostDetail />} />
             <Route path="/posts/:postId/edit" element={<PostEdit />} />
             <Route path="/my-articles" element={<Articles />} />
+            <Route path="/post-history" element={<History />} />
             <Route path="/create-post" element={<PostCreate />} />
             <Route path="/:userId/details" element={<User />} />
           </Route>
