@@ -101,11 +101,11 @@ export const insertComment = async (postId, userId, commentContent) => {
   if (error) throw (error)
 }
 
-export const insertOldPost = async (postId, userId, postTitle, postContent) => {
+export const insertOldPost = async (postId, postTitle, postContent, userId) => {
   const { data, error } = await supabase
   .from('history_of_posts')
   .insert([
-    { post_data: {post_id: postId, user_id: userId, post_title: postTitle, post_content: postContent }},
+    { post_data: {post_id: postId, post_title: postTitle, post_content: postContent }, user_id: userId},
   ])
   .select()
   if (error) throw (error)       
@@ -122,6 +122,14 @@ export const deleteArticle = async (postId, userId) => {
 export const deletePost = async (postId, userId) => {
   const { error } = await supabase
   .from('posts')
+  .delete()
+  .match({id: postId, user_id: userId}) 
+  if (error) throw (error)
+}
+
+export const deleteOldPost = async (postId, userId) => {
+  const { error } = await supabase
+  .from('history_of_posts')
   .delete()
   .match({id: postId, user_id: userId}) 
   if (error) throw (error)

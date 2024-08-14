@@ -58,12 +58,7 @@ function PostEdit() {
   // ----------- insert to history of posts
   const insertOldPostFunc = useMutation({
     mutationFn: () =>
-      insertOldPost(
-        postId,
-        postData?.user_id,
-        postData?.title,
-        postData?.content
-      ),
+      insertOldPost(postId, postData?.title, postData?.content, user.id),
     onSuccess: () => {
       queryClient.invalidateQueries(["oldposts"]);
     },

@@ -1,10 +1,16 @@
 import Post from "./Post";
 import { useData } from "../context/DataProvider";
+import { Spinner } from "@material-tailwind/react";
 
 function PostList() {
   const { posts, isLoading } = useData();
   if (isLoading) {
-    return <div>Loading posts...</div>;
+    return (
+      <div className="flex text-gray-900 text-xl">
+        <Spinner />
+        Loading posts...
+      </div>
+    );
   }
 
   return (
