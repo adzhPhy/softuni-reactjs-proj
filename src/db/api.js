@@ -136,6 +136,14 @@ export const deletePost = async (postId, userId) => {
   if (error) throw (error)
 }
 
+export const deleteComment = async (postId, userId) => {
+  const { error } = await supabase
+  .from('comments')
+  .delete()
+  .match({post_id: postId, user_id: userId}) 
+  if (error) throw (error)
+}
+
 export const deleteOldPost = async (postId, userId) => {
   const { error } = await supabase
   .from('history_of_posts')
