@@ -39,7 +39,7 @@ function Comment({ created_at, authorId, content }) {
             {content}
           </Typography>
           <Typography className="text-xs">
-            <p className="text-xs ml-2">
+            <Typography className="text-xs ml-2">
               <Link
                 to={profileLink}
                 className="underline hover:no-underline hover:text-red-700"
@@ -47,7 +47,7 @@ function Comment({ created_at, authorId, content }) {
                 {postAuthor.split("@")[0]}
               </Link>{" "}
               {moment(created_at).fromNow()}
-            </p>
+            </Typography>
           </Typography>
         </div>
       </div>

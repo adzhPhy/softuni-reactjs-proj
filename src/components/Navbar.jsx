@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthProvider";
 import { Avatar, Button } from "@material-tailwind/react";
 import supabase from "../client";
 import { MdPostAdd } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -36,7 +37,10 @@ const Navbar = () => {
             </li>
           )}
           <li>
-            <Link to="/" className="text-gray-900 hover:underline">
+            <Link
+              to="/"
+              className="text-gray-900 hover:underline flex items-center"
+            >
               Home
             </Link>
           </li>

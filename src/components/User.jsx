@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Post from "./Post";
 import NotFound from "./NotFound";
+import Navdiv from "./Navdiv";
 
 const User = () => {
   const { userId } = useParams();
@@ -36,6 +37,7 @@ const User = () => {
   //
   return (
     <div className="text-gray-900 flex flex-col items-center">
+      <Navdiv />
       <Card className="w-96 shadow rounded-lg">
         <div className="flex justify-center items-center">
           <div className="">

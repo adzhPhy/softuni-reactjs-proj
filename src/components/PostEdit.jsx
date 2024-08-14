@@ -8,7 +8,7 @@ import {
   Textarea,
 } from "@material-tailwind/react";
 import { CiSquareRemove } from "react-icons/ci";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { insertOldPost, deletePost } from "../db/api";
 import { useData } from "../context/DataProvider";
@@ -125,7 +125,14 @@ function PostEdit() {
         </CardBody>
       </Card>
       <Card className="flex w-[40rem] justify-between items-center pl-4 rounded-sm">
-        <CardFooter className="w-full pt gap-1 flex flex-col text-gray-900">
+        <CardFooter className="w-full pt gap-1 flex flex-col items-center text-gray-900">
+          <p className="text-sm mb-2">
+            Note: Old version of posts are saved in the{" "}
+            <Link to="/post-history" className="hover:underline">
+              History of Posts
+            </Link>{" "}
+            page
+          </p>
           <div className="relative w-full min-w-[200px]">
             <Textarea
               variant="outlined"

@@ -11,6 +11,7 @@ import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
+import Navdiv from "./Navdiv.jsx";
 
 function PostDetail() {
   const { user } = useAuth();
@@ -56,6 +57,7 @@ function PostDetail() {
   // -----------------------------------------
   return (
     <div className="w-full flex flex-row justify-center items-center text-gray-900">
+      <Navdiv />
       <div className="flex flex-col justify-start">
         <Typography variant="h4" className="text-xs absolute ml-8 mt-2">
           Posted by{" "}

@@ -7,6 +7,7 @@ import { GiArchiveResearch } from "react-icons/gi";
 import { useQuery } from "@tanstack/react-query";
 import { fetchArticles } from "../db/api";
 import SavedArticle from "./SavedArticle";
+import Navdiv from "./Navdiv";
 
 function Articles() {
   const [myArticles, setMyArticles] = useState([]);
@@ -68,6 +69,7 @@ function Articles() {
   //
   return (
     <div className="flex flex-col justify-center items-center gap-2">
+      <Navdiv />
       <div className=" text-gray-800 bg-white border rounded-lg w-50 p-6 flex gap-2 items-center">
         <GiArchiveResearch size={30} />
         Saved Articles Archive
