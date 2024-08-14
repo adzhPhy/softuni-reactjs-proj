@@ -5,21 +5,21 @@ import { IoLibrary } from "react-icons/io5";
 
 const Navdiv = () => {
   return (
-    <div className="absolute left-0 m-2 flex flex-col gap-2">
+    <div className="absolute top-0 left-0 m-2 flex flex-row gap-2">
       <Link to="/" className="bg-white hover:shadow-xl rounded-xl p-2 border-2">
-        <FaHome size={30} />
+        <FaHome size={25} />
       </Link>
       <Link
         to="/my-articles"
         className="bg-white hover:shadow-lg rounded-xl p-2 border-2"
       >
-        <GiArchiveResearch size={30} />
+        <GiArchiveResearch size={25} />
       </Link>
       <Link
         to="/post-history"
         className="bg-white hover:shadow-lg rounded-xl p-2 border-2"
       >
-        <IoLibrary size={30} />
+        <IoLibrary size={25} />
       </Link>
     </div>
   );

@@ -53,7 +53,7 @@ const Navbar = () => {
             <li>
               <Link to="/create-post">
                 <Button className="text-gray-900 hover:text-gray-600 p-0.5">
-                  <MdPostAdd size={25} />
+                  <MdPostAdd size={30} />
                 </Button>
               </Link>
             </li>

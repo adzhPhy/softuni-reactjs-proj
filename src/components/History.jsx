@@ -3,7 +3,6 @@ import { useData } from "../context/DataProvider";
 import { useAuth } from "../context/AuthProvider";
 import { IoLibrary } from "react-icons/io5";
 import HistoryArticle from "./HistoryArticle";
-import Navdiv from "./Navdiv";
 
 function History() {
   const { user } = useAuth();
@@ -25,7 +24,6 @@ function History() {
   //
   return (
     <div className="flex flex-col justify-center items-center gap-4">
-      <Navdiv />
       <div className=" text-gray-800 bg-white border rounded-lg w-50 p-6 flex gap-2 items-center">
         <IoLibrary size={30} />
         Old Posts Archive
