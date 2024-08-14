@@ -5,25 +5,33 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useData } from "../context/DataProvider";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Post from "./Post";
+import NotFound from "./NotFound";
 
 const User = () => {
   const { userId } = useParams();
   const { users, posts } = useData();
-  var imgsrc = `https://robohash.org/${userId}.png`;
-  //
+  const navigate = useNavigate();
+  const currentUser = users.filter((usr) => usr.id === userId)[0];
   const [userPosts, setUserPosts] = useState([]);
   const [profileData, setProfileData] = useState([]);
   useEffect(() => {
-    if (posts != undefined && users != undefined) {
+    if (users !== undefined && posts !== undefined) {
       setUserPosts(posts.filter((post) => post.user_id === userId));
-      setProfileData(users.filter((usr) => usr.id === userId)[0]);
-      console.log(userPosts);
-      console.log(profileData);
+      setProfileData(currentUser);
+    } else {
+      navigate(0);
     }
-  }, [posts, userId, users]);
+  }, [posts, users]);
+
+  var imgsrc = `https://robohash.org/${userId}.png`;
+  //
+  if (currentUser === undefined) {
+    return <NotFound />;
+  }
+  //
   var username = profileData.email?.split("@")[0];
   //
   return (

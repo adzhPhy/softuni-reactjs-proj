@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AvatarComp from "./Avatar";
 import supabase from "../client";
 import DialogComp from "./Dialog";
+import NotFound from "./NotFound";
 
 function PostEdit() {
   const { user } = useAuth();
@@ -34,6 +35,7 @@ function PostEdit() {
   const [content, setContent] = useState("");
   const [dialog, setDialog] = useState("edit");
   //
+
   useEffect(() => {
     setPostData(currentPost);
   }, [posts, postId, currentPost]);
@@ -102,6 +104,9 @@ function PostEdit() {
       ? "Are you sure you want to delete your post?"
       : "Are you sure you want to commit these changes to your post?";
   // -------------------------------------------------
+  if (currentPost === undefined) {
+    return <NotFound />;
+  }
   return (
     <div className="flex h-full flex-row rounded-md justify-center items-center">
       <Card className=" m-4 w-96 h-112 border border-gray-600 pt-2 rounded-sm shadow-md">

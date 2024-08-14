@@ -11,6 +11,7 @@ import UserProfile from "./components/UserProfile.jsx";
 import PostCreate from "./components/PostCreate.jsx";
 import PostEdit from "./components/PostEdit.jsx";
 import User from "./components/User.jsx";
+import NotFound from "./components/NotFound.jsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/post-history" element={<History />} />
             <Route path="/create-post" element={<PostCreate />} />
             <Route path="/:userId/details" element={<User />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
           <Route path="/" exact element={<Home />} />
           <Route path="/login" element={<Login />} />

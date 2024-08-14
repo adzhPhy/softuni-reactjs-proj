@@ -1,3 +1,4 @@
+import NotFound from "./NotFound.jsx";
 import Post from "./Post";
 import Comment from "./Comment";
 import { Link, useParams } from "react-router-dom";
@@ -48,6 +49,9 @@ function PostDetail() {
     profileLink = "/myprofile";
   } else {
     profileLink = `/${post.user_id}/details`;
+  }
+  if (post === undefined) {
+    return <NotFound />;
   }
   // -----------------------------------------
   return (
