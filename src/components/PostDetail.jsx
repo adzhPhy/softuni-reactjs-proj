@@ -12,13 +12,16 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 import Navdiv from "./Navdiv.jsx";
+import DynamicLink from "./DynamicLink.jsx";
+import supabase from "../client.js";
 
 function PostDetail() {
   const { user } = useAuth();
   const { postId } = useParams();
+  const queryClient = useQueryClient();
   const { posts, comments, users } = useData();
   const [commentContent, setCommentContent] = useState("");
-  const queryClient = useQueryClient();
+  const [buttonType, setButtonType] = useState("notEdit");
 
   const post = posts.filter((el) => el.id === postId)[0];
   const postAuthor = users
@@ -35,6 +38,21 @@ function PostDetail() {
       });
     },
   });
+  const updateComment = useMutation({
+    mutationFn: () =>
+      supabase
+        .from("comments")
+        .update({
+          content: commentContent,
+        })
+        .match({ post_id: postId, user_id: user.id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["comments"],
+      });
+    },
+  });
+  //
   const handleCommentPost = () => {
     if (commentContent.trim().split(" ").join("") !== "") {
       mutate.mutate();
@@ -43,7 +61,37 @@ function PostDetail() {
       toast.error("You cannot submit an empty comment!");
     }
   };
+  const handleCommentEdit = () => {
+    if (commentContent.trim().split(" ").join("") !== "") {
+      updateComment.mutate();
+      toast.success("Comment is edited!");
+      setButtonType("notEdit");
+    } else {
+      toast.error("You cannot submit an empty comment!");
+    }
+  };
+
   //
+  var commentButton = "";
+  if (buttonType === "notEdit") {
+    commentButton = (
+      <Button
+        className="text-sm text-gray-900 pb-1"
+        onClick={handleCommentPost}
+      >
+        Post Comment
+      </Button>
+    );
+  } else if (buttonType === "edit") {
+    commentButton = (
+      <Button
+        className="text-sm text-gray-900 pb-1"
+        onClick={handleCommentEdit}
+      >
+        Edit Comment
+      </Button>
+    );
+  }
   var profileLink = "";
   if (post.user_id === user.id) {
     profileLink = "/myprofile";
@@ -75,18 +123,35 @@ function PostDetail() {
           content={post.content}
         />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center justify-center">
         {postComments != undefined ? (
-          <div className="flex flex-row gap-1 overflow-y-auto">
+          <div className="flex flex-row gap-1 justify-center items-center">
             <Card className="w-96 rounded">
               {postComments?.map((comment) => (
-                <Comment
+                <DynamicLink
                   key={comment.id}
-                  created_at={comment.created_at}
-                  authorId={comment.user_id}
-                  content={comment.content}
-                />
+                  condition1={user.id === comment.user_id}
+                  func={() => {
+                    setButtonType("edit");
+                  }}
+                >
+                  {buttonType === "notEdit" && (
+                    <Comment
+                      created_at={comment.created_at}
+                      authorId={comment.user_id}
+                      content={comment.content}
+                    />
+                  )}
+                </DynamicLink>
               ))}
+              {buttonType === "edit" && (
+                <textarea
+                  className="peer h-full min-h-[10px] w-full resize-none rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 pt-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
+                  onChange={(e) => {
+                    setCommentContent(e.target.value);
+                  }}
+                ></textarea>
+              )}
             </Card>
           </div>
         ) : (
@@ -105,12 +170,7 @@ function PostDetail() {
                 Write a Comment
               </label>
             </div>
-            <Button
-              className="text-sm text-gray-900 pb-1"
-              onClick={handleCommentPost}
-            >
-              Post Comment
-            </Button>
+            {commentButton}
           </CardFooter>
         )}
       </div>

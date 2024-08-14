@@ -97,6 +97,7 @@ function PostEdit() {
       updatePostFunc.mutate();
       insertOldPostFunc.mutate();
       handleOpen();
+      navigate(`/posts/${postId}/details`);
     }
   };
   var textForDialogConfirmation =

@@ -75,12 +75,6 @@ function Login() {
                 <label className="text-gray-500">Remember me</label>
               </div>
             </div>
-            <a
-              href="#"
-              className="text-sm font-medium text-gray-500 hover:underline"
-            >
-              Forgot password?
-            </a>
           </div>
           <button
             type="submit"

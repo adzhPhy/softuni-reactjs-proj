@@ -61,7 +61,16 @@ export const updatePost = async (postId, postTitle, postContent) => {
   .eq("id", postId)
   if (error) throw (error.message)
 }
-          
+ 
+export const updateComment = async (postId, userId, commentContent) => {
+  const {data, error} = await supabase
+  .from("comments")
+  .update({
+    content: commentContent
+  })
+  .match({post_id: postId, user_id: userId})
+}
+
 export const likePost = async (postId, userId) => {
   const { error } = await supabase
   .from('post_likes')
