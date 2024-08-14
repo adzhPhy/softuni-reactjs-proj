@@ -1,4 +1,4 @@
-import { Button, Card } from "@material-tailwind/react";
+import { Card } from "@material-tailwind/react";
 import Post from "./Post";
 import { useData } from "../context/DataProvider";
 import { useEffect, useState } from "react";
@@ -44,6 +44,27 @@ function Articles() {
   if (isLoading) {
     return <div>Loading posts...</div>;
   }
+  // ------------------ loaders
+  const postsLoader =
+    (myArticles.length === 0 && (
+      <div className="text-gray-900 p-2 rounded-md">You have no posts!</div>
+    )) ||
+    (myArticles === undefined && (
+      <div className="text-gray-900 p-2 rounded-md">
+        There was an error fetching your posts...
+      </div>
+    ));
+  const articleLoader =
+    (savedArticles.length === 0 && (
+      <div className="text-gray-900 p-2 rounded-md">
+        You have no saved articles!
+      </div>
+    )) ||
+    (savedArticles === undefined && (
+      <div className="text-gray-900 p-2 rounded-md">
+        There was an error fetching your saved articles...
+      </div>
+    ));
   //
   return (
     <div className="flex flex-col justify-center items-center gap-2">
@@ -51,23 +72,25 @@ function Articles() {
         <GiArchiveResearch size={30} />
         Saved Articles Archive
       </div>
-      <Card>
-        <div className="flex border bg-slate-50 rounded-md flex-wrap gap-8 m-7 justify-center items-center text-gray-900">
-          {myArticles?.map((post) => (
-            <div key={post.id} className="flex">
-              <Post
-                author={post.user_id}
-                post_id={post.id}
-                title={post.title}
-                content={post.content}
-              />
-            </div>
-          ))}
-        </div>
+      <Card className="flex justify-center items-center">
+        {postsLoader || (
+          <div className="flex border bg-slate-50 rounded-md flex-wrap gap-8 m-7 justify-center items-center text-gray-900">
+            {myArticles?.map((post) => (
+              <div key={post.id} className="flex">
+                <Post
+                  author={post.user_id}
+                  post_id={post.id}
+                  title={post.title}
+                  content={post.content}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </Card>
-      {savedArticles === undefined ||
-        (savedArticles?.length != 0 && (
-          <Card>
+      <Card>
+        {articleLoader ||
+          (savedArticles?.length !== 0 && (
             <div className="flex border bg-slate-50 rounded-md flex-wrap gap-8 m-7 justify-center items-center text-gray-900">
               {savedArticles?.map((post) => (
                 <div key={post.id}>
@@ -80,8 +103,8 @@ function Articles() {
                 </div>
               ))}
             </div>
-          </Card>
-        ))}
+          ))}
+      </Card>
     </div>
   );
 }

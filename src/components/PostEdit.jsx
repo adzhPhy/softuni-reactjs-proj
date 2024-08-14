@@ -6,38 +6,40 @@ import {
   CardHeader,
   Typography,
   Textarea,
-  Dialog,
-  DialogBody,
-  DialogFooter,
 } from "@material-tailwind/react";
+import { CiSquareRemove } from "react-icons/ci";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updatePost, insertOldPost } from "../db/api";
+import { insertOldPost, deletePost } from "../db/api";
 import { useData } from "../context/DataProvider";
+import { useAuth } from "../context/AuthProvider";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AvatarComp from "./Avatar";
 import supabase from "../client";
-import moment from "moment";
+import DialogComp from "./Dialog";
 
 function PostEdit() {
+  const { user } = useAuth();
   const { postId } = useParams();
   const { posts } = useData();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const currentPost = posts?.filter((post) => post.id === postId)[0];
   const [open, setOpen] = useState(false);
   const [postData, setPostData] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [dialog, setDialog] = useState("edit");
   //
   useEffect(() => {
     setPostData(currentPost);
   }, [posts, postId, currentPost]);
   // dialog func
   const handleOpen = () => setOpen(!open);
-  // edit function
+  // ---------- edit function
   const updatePostFunc = useMutation({
     mutationFn: () =>
       supabase
@@ -51,8 +53,9 @@ function PostEdit() {
       queryClient.invalidateQueries(["posts"]);
       toast.success("Changes have been made!");
     },
-    onError: (error) => console.log(error.message),
+    onError: (error) => toast.error(error.message),
   });
+  // ----------- insert to history of posts
   const insertOldPostFunc = useMutation({
     mutationFn: () =>
       insertOldPost(
@@ -64,8 +67,25 @@ function PostEdit() {
     onSuccess: () => {
       queryClient.invalidateQueries(["oldposts"]);
     },
-    onError: (error) => console.log(error.message),
+    onError: (error) => toast(error.message),
   });
+  // ------- detele post
+  const deletePostFunc = useMutation({
+    mutationFn: () => deletePost(postId, user.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+    onError: (error) => toast.error(error.message),
+  });
+  const handlePostDelete = () => {
+    if (currentPost.user_id !== user.id) {
+      toast.error("You are not authorized for that action!");
+    } else {
+      deletePostFunc.mutate();
+      navigate("/my-articles");
+    }
+  };
+  // ------ edit post
   const handlePostEdit = () => {
     if (title === postData?.title || content === postData?.content) {
       toast.error("Please make changes to your post before submitting!");
@@ -82,7 +102,10 @@ function PostEdit() {
       handleOpen();
     }
   };
-
+  var textForDialogConfirmation =
+    dialog === "delete"
+      ? "Are you sure you want to delete your post?"
+      : "Are you sure you want to commit these changes to your post?";
   // -------------------------------------------------
   return (
     <div className="flex h-full flex-row rounded-md justify-center items-center">
@@ -124,41 +147,33 @@ function PostEdit() {
               Edit Content
             </label>
           </div>
-          <Button
-            onClick={handleOpen}
-            variant="gradient"
-            className="text-gray-900 text-md bg-slate-50"
-          >
-            Edit Post
-          </Button>
-          <Dialog
-            size={"xs"}
+          <div className="flex flex-row items-center justify-center gap-4">
+            <Button
+              onClick={() => {
+                setDialog("edit");
+                handleOpen();
+              }}
+              variant="gradient"
+              className="text-gray-900 text-md bg-slate-50 p-2"
+            >
+              Edit Post
+            </Button>
+            <Button
+              onClick={() => {
+                setDialog("delete");
+                handleOpen();
+              }}
+              className="text-gray-900 bg-red-400 p-1 flex"
+            >
+              <CiSquareRemove size={30} />
+            </Button>
+          </div>
+          <DialogComp
             open={open}
-            handler={handleOpen}
-            variant="gradient"
-            className="max-w-[30rem] text-gray-900 flex flex-col border-2 mt-2 w-124 bg-slate-100 gap-1"
-          >
-            <DialogBody className="flex justify-center text-md">
-              <b>Are you sure you want to commit the changes to your post?</b>
-            </DialogBody>
-            <DialogFooter className="justify-center mb-1">
-              <Button
-                variant="gradient"
-                onClick={handleOpen}
-                className="mr-1 p-2 text-gray-900 bg-red-400"
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="gradient"
-                color="green"
-                className="text-gray-900 p-2 bg-green-400"
-                onClick={handlePostEdit}
-              >
-                Confirm
-              </Button>
-            </DialogFooter>
-          </Dialog>
+            handleOpen={handleOpen}
+            func={dialog === "edit" ? handlePostEdit : handlePostDelete}
+            textByDialogType={textForDialogConfirmation}
+          />
         </CardFooter>
       </Card>
       <ToastContainer />

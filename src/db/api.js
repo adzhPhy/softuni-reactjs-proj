@@ -118,3 +118,11 @@ export const deleteArticle = async (postId, userId) => {
   .match({post_id: postId, user_id: userId}) 
   if (error) throw (error)
 }
+
+export const deletePost = async (postId, userId) => {
+  const { error } = await supabase
+  .from('posts')
+  .delete()
+  .match({id: postId, user_id: userId}) 
+  if (error) throw (error)
+} 

@@ -57,7 +57,7 @@ function SavedArticle({ author, post_id, title, content }) {
     },
   });
   //
-  const deletePost = useMutation({
+  const deleteArticleFunc = useMutation({
     mutationFn: () => deleteArticle(post_id, user.id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["articles"] });
@@ -73,7 +73,7 @@ function SavedArticle({ author, post_id, title, content }) {
     setPostLiked(true);
   };
   const handleArticleDelete = () => {
-    deletePost.mutate();
+    deleteArticleFunc.mutate();
   };
   // ---------------;----------------------------------
   var likeButton = <></>;
