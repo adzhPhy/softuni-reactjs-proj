@@ -1,6 +1,6 @@
 import supabase from "../client"
-// fetching functions
-// fetch posts
+
+// FETCH FUNCTIONS
 export const fetchPosts = async () => {
     let {data: posts, error} = await supabase
     .from('posts')
@@ -49,27 +49,7 @@ export const fetchOldPosts = async () => {
   return [...oldposts]
 }
 
-// update, insert, delete queries
-
-export const updatePost = async (postId, postTitle, postContent) => {
-  const { data, error } = await supabase
-  .from("posts")
-  .update({
-    title: postTitle,
-    content: postContent,
-  })
-  .eq("id", postId)
-  if (error) throw (error.message)
-}
- 
-export const updateComment = async (postId, userId, commentContent) => {
-  const {data, error} = await supabase
-  .from("comments")
-  .update({
-    content: commentContent
-  })
-  .match({post_id: postId, user_id: userId})
-}
+// INSERT, UPDATE, DELETE QUERIES
 
 export const likePost = async (postId, userId) => {
   const { error } = await supabase
@@ -120,6 +100,28 @@ export const insertOldPost = async (postId, postTitle, postContent, userId) => {
   if (error) throw (error)       
 }
 
+
+export const updatePost = async (postId, postTitle, postContent) => {
+  const { data, error } = await supabase
+  .from("posts")
+  .update({
+    title: postTitle,
+    content: postContent,
+  })
+  .eq("id", postId)
+  if (error) throw (error.message)
+}
+ 
+export const updateComment = async (_id, userId, commentContent) => {
+  const {data, error} = await supabase
+  .from("comments")
+  .update({
+    content: commentContent
+  })
+  .match({id: _id, user_id: userId})
+}
+
+
 export const deleteArticle = async (postId, userId) => {
   const { error } = await supabase
   .from('articles')
@@ -136,11 +138,11 @@ export const deletePost = async (postId, userId) => {
   if (error) throw (error)
 }
 
-export const deleteComment = async (postId, userId) => {
+export const deleteComment = async (commentId, userId) => {
   const { error } = await supabase
   .from('comments')
   .delete()
-  .match({post_id: postId, user_id: userId}) 
+  .match({id: commentId, user_id: userId}) 
   if (error) throw (error)
 }
 

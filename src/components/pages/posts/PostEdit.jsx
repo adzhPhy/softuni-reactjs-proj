@@ -87,7 +87,9 @@ function PostEdit() {
     if (title === postData?.title || content === postData?.content) {
       toast.error("Please make changes to your post before submitting!");
     } else if (postData.title === undefined || postData.content === undefined) {
-      console.log(postData.title, postData.content);
+      toast.error(
+        "There was error in editing your post. Please try again later."
+      );
     } else if (
       title.trim().split(" ").join("") === "" ||
       content.trim().split(" ").join("") === ""

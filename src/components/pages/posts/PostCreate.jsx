@@ -34,7 +34,12 @@ function PostCreate() {
     if (
       posts.some((el) => el.title === postTitle || el.content === postContent)
     ) {
-      toast.error("Such a post already exists!", { position: "top-right" });
+      toast.error("Such a post already exists!");
+    } else if (
+      postTitle.trim().split(" ").join("") === "" ||
+      postContent.trim().split(" ").join("") === ""
+    ) {
+      toast.error("You cannot submit an empty field!");
     } else {
       mutate.mutate();
       navigate("/");
