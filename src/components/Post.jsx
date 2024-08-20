@@ -18,6 +18,7 @@ import { useData } from "../context/DataProvider";
 import { useEffect, useState } from "react";
 import AvatarComp from "./Avatar";
 import { FaEdit } from "react-icons/fa";
+import { CiSquareRemove } from "react-icons/ci";
 
 function Post({ author, post_id, title, content }) {
   const { user } = useAuth();
@@ -122,7 +123,7 @@ function Post({ author, post_id, title, content }) {
       onClick={() => navigate(`/posts/${post_id}/edit`)}
       className="flex gap-1 p-2 items-center text-gray-900"
     >
-      <FaEdit className="text-lg" />
+      <FaEdit size={20} />
       Edit Post
     </Button>
   );
@@ -157,7 +158,9 @@ function Post({ author, post_id, title, content }) {
             {comments != undefined ? `${postComments}` : `fetching comments...`}
           </p>
         </div>
-        {user && user.id != author ? saveButton : user && editButton}
+        <div className="flex gap-1 ">
+          {user && user.id != author ? saveButton : editButton}
+        </div>
       </div>
     </div>
   );

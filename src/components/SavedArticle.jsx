@@ -137,7 +137,7 @@ function SavedArticle({ author, post_id, title, content }) {
         </div>
         <Button
           onClick={handleArticleDelete}
-          className="text-gray-900 text-2xl rounded-md p-1 mr-4  bg-slate-300"
+          className="text-gray-900 text-2xl rounded-md p-1 mr-4 bg-slate-300"
         >
           <MdOutlineBookmarkRemove />
         </Button>
