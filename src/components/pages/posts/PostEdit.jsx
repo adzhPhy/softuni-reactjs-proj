@@ -7,19 +7,19 @@ import {
   Typography,
   Textarea,
 } from "@material-tailwind/react";
-import { CiSquareRemove } from "react-icons/ci";
+import supabase from "../../../client";
+import { useEffect, useState } from "react";
+import { useData } from "../../../context/DataProvider";
+import { useAuth } from "../../../context/AuthProvider";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { insertOldPost, deletePost } from "../db/api";
-import { useData } from "../context/DataProvider";
-import { useAuth } from "../context/AuthProvider";
-import { useEffect, useState } from "react";
+import { insertOldPost, deletePost } from "../../../db/api";
+import { CiSquareRemove } from "react-icons/ci";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AvatarComp from "./Avatar";
-import supabase from "../client";
-import DialogComp from "./Dialog";
-import NotFound from "./NotFound";
+import AvatarComp from "../../utils/Avatar";
+import DialogComp from "../../utils/Dialog";
+import NotFound from "../NotFound";
 
 function PostEdit() {
   const { user } = useAuth();

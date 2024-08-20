@@ -10,15 +10,14 @@ import { AiFillLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { MdBookmarkAdd } from "react-icons/md";
 import { MdBookmarkAdded } from "react-icons/md";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../../../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { insertArticle, likePost } from "../db/api";
-import { useData } from "../context/DataProvider";
+import { insertArticle, likePost } from "../../../db/api";
+import { useData } from "../../../context/DataProvider";
 import { useEffect, useState } from "react";
-import AvatarComp from "./Avatar";
+import AvatarComp from "../../utils/Avatar";
 import { FaEdit } from "react-icons/fa";
-import { CiSquareRemove } from "react-icons/ci";
 
 function Post({ author, post_id, title, content }) {
   const { user } = useAuth();
@@ -159,7 +158,7 @@ function Post({ author, post_id, title, content }) {
           </p>
         </div>
         <div className="flex gap-1 ">
-          {user && user.id != author ? saveButton : editButton}
+          {user && user.id != author ? saveButton : user && editButton}
         </div>
       </div>
     </div>

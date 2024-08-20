@@ -1,5 +1,5 @@
 import Post from "./Post";
-import { useData } from "../context/DataProvider";
+import { useData } from "../../../context/DataProvider";
 import { Spinner } from "@material-tailwind/react";
 
 function PostList() {

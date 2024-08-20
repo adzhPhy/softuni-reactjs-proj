@@ -8,7 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteOldPost, insertPost } from "../db/api";
+import { deleteOldPost, insertPost } from "../../../db/api";
 
 function HistoryArticle({ _id, author, post_id, title, content }) {
   const queryClient = useQueryClient();

@@ -1,17 +1,17 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./components/auth/Login.jsx";
 import Home from "./components/Home.jsx";
+import Login from "./components/auth/Login.jsx";
 import SignUp from "./components/auth/SignUp.jsx";
 import AuthRoute from "./components/auth/AuthRoute.jsx";
-import PostDetail from "./components/PostDetail.jsx";
-import Articles from "./components/Articles.jsx";
-import History from "./components/History.jsx";
-import UserProfile from "./components/UserProfile.jsx";
-import PostCreate from "./components/PostCreate.jsx";
-import PostEdit from "./components/PostEdit.jsx";
-import User from "./components/User.jsx";
-import NotFound from "./components/NotFound.jsx";
+import PostDetail from "./components/pages/posts/PostDetail.jsx";
+import Articles from "./components/pages/articles/Articles.jsx";
+import History from "./components/pages/history/History.jsx";
+import UserProfile from "./components/pages/user/UserProfile.jsx";
+import PostCreate from "./components/pages/posts/PostCreate.jsx";
+import PostEdit from "./components/pages/posts/PostEdit.jsx";
+import User from "./components/pages/user/User.jsx";
+import NotFound from "./components/pages/NotFound.jsx";
 
 function App() {
   return (

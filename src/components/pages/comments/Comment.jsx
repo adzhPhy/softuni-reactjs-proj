@@ -1,8 +1,8 @@
-import { Avatar, CardBody, Typography } from "@material-tailwind/react";
 import moment from "moment";
+import { Avatar, CardBody, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { useData } from "../context/DataProvider";
-import { useAuth } from "../context/AuthProvider";
+import { useData } from "../../../context/DataProvider";
+import { useAuth } from "../../../context/AuthProvider";
 
 function Comment({ created_at, authorId, content }) {
   const { user } = useAuth();

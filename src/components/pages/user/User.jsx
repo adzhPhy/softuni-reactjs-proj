@@ -4,12 +4,12 @@ import {
   CardBody,
   Typography,
 } from "@material-tailwind/react";
-import { useData } from "../context/DataProvider";
+import { useData } from "../../../context/DataProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Post from "./Post";
-import NotFound from "./NotFound";
-import Navdiv from "./Navdiv";
+import NotFound from "../NotFound";
+import Navdiv from "../../utils/Navdiv";
+import Post from "../posts/Post";
 
 const User = () => {
   const { userId } = useParams();

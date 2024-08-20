@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import PostList from "./PostList";
+import PostList from "./pages/posts/PostList";
 
 function Home() {
   return (

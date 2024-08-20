@@ -1,6 +1,6 @@
-import NotFound from "./NotFound.jsx";
+import NotFound from "../NotFound.jsx";
 import Post from "./Post";
-import Comment from "./Comment";
+import Comment from "../comments/Comment.jsx";
 import { Link, useParams } from "react-router-dom";
 import {
   Button,
@@ -9,18 +9,18 @@ import {
   Typography,
   Textarea,
 } from "@material-tailwind/react";
-import { useAuth } from "../context/AuthProvider";
-import { useData } from "../context/DataProvider";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteComment, insertComment } from "../db/api";
+import supabase from "../../../client.js";
 import { useState } from "react";
+import { useAuth } from "../../../context/AuthProvider.jsx";
+import { useData } from "../../../context/DataProvider.jsx";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteComment, insertComment } from "../../../db/api.js";
+import { CiSquareRemove } from "react-icons/ci";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
-import Navdiv from "./Navdiv.jsx";
-import DynamicLink from "./DynamicLink.jsx";
-import supabase from "../client.js";
-import { CiSquareRemove } from "react-icons/ci";
+import Navdiv from "../../utils/Navdiv.jsx";
+import DynamicLink from "../../utils/DynamicLink.jsx";
 
 function PostDetail() {
   const { user } = useAuth();

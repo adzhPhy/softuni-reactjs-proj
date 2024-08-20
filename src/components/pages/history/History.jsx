@@ -1,6 +1,6 @@
 import { Card, Spinner } from "@material-tailwind/react";
-import { useData } from "../context/DataProvider";
-import { useAuth } from "../context/AuthProvider";
+import { useData } from "../../../context/DataProvider";
+import { useAuth } from "../../../context/AuthProvider";
 import { IoLibrary } from "react-icons/io5";
 import HistoryArticle from "./HistoryArticle";
 

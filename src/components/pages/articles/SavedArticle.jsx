@@ -9,11 +9,11 @@ import {
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../../../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteArticle, likePost } from "../db/api";
-import { useData } from "../context/DataProvider";
+import { deleteArticle, likePost } from "../../../db/api";
+import { useData } from "../../../context/DataProvider";
 import { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineBookmarkRemove } from "react-icons/md";

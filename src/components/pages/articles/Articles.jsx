@@ -1,12 +1,12 @@
-import Post from "./Post";
-import SavedArticle from "./SavedArticle";
-import { Card } from "@material-tailwind/react";
-import { useData } from "../context/DataProvider";
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthProvider";
-import { GiArchiveResearch } from "react-icons/gi";
+import { useData } from "../../../context/DataProvider";
+import { useAuth } from "../../../context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
-import { fetchArticles } from "../db/api";
+import { Card } from "@material-tailwind/react";
+import { GiArchiveResearch } from "react-icons/gi";
+import { fetchArticles } from "../../../db/api";
+import SavedArticle from "./SavedArticle";
+import Post from "../posts/Post";
 
 function Articles() {
   const [myArticles, setMyArticles] = useState([]);

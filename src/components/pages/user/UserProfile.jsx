@@ -4,7 +4,7 @@ import {
   CardBody,
   Typography,
 } from "@material-tailwind/react";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../../../context/AuthProvider";
 
 const UserProfile = () => {
   const { user } = useAuth();

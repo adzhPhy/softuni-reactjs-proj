@@ -7,10 +7,10 @@ import {
 } from "@material-tailwind/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { insertPost } from "../db/api";
-import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import { useData } from "../context/DataProvider";
+import { insertPost } from "../../../db/api";
+import { useAuth } from "../../../context/AuthProvider";
+import { useData } from "../../../context/DataProvider";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
