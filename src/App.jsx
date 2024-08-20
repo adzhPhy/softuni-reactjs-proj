@@ -12,6 +12,7 @@ import PostCreate from "./components/pages/posts/PostCreate.jsx";
 import PostEdit from "./components/pages/posts/PostEdit.jsx";
 import User from "./components/pages/user/User.jsx";
 import NotFound from "./components/pages/NotFound.jsx";
+import RestrictedRoute from "./components/auth/RestrictedRoute.jsx";
 
 function App() {
   return (
@@ -29,8 +30,10 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Route>
           <Route path="/" exact element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route element={<RestrictedRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

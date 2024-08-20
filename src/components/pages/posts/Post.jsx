@@ -157,7 +157,7 @@ function Post({ author, post_id, title, content }) {
             {comments != undefined ? `${postComments}` : `fetching comments...`}
           </p>
         </div>
-        <div className="flex gap-1 ">
+        <div className="flex gap-1">
           {user && user.id != author ? saveButton : user && editButton}
         </div>
       </div>

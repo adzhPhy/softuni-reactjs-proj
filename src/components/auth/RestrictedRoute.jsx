@@ -1,17 +1,15 @@
 import { useAuth } from "../../context/AuthProvider";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const AuthRoute = () => {
+const RestrictedRoute = () => {
   const { user } = useAuth();
   const location = useLocation();
 
   if (user) {
-    return <Outlet />;
+    return <Navigate to="/" replace state={{ path: location.pathname }} />;
   } else {
-    return (
-      <Navigate to={"/login"} replace state={{ path: location.pathname }} />
-    );
+    return <Outlet />;
   }
 };
 
-export default AuthRoute;
+export default RestrictedRoute;

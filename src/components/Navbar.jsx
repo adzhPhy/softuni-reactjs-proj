@@ -3,7 +3,6 @@ import { useAuth } from "../context/AuthProvider";
 import { Avatar, Button } from "@material-tailwind/react";
 import supabase from "../client";
 import { MdPostAdd } from "react-icons/md";
-import { FaHome } from "react-icons/fa";
 
 const Navbar = () => {
   const { user } = useAuth();

@@ -1,5 +1,5 @@
-import { useState } from "react";
 import supabase from "../../client";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
